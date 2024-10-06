@@ -1,12 +1,12 @@
 FROM mysql:5.7
 
+ENV MYSQL_DATABASE=sample_db \
+    MYSQL_USER=user \
+    MYSQL_PASSWORD=password \
+    MYSQL_ROOT_PASSWORD=password
+
 COPY ./conf.d /etc/mysql/conf.d
-
-ENV MYSQL_ROOT_PASSWORD=root
-ENV MYSQL_DATABASE=sample_db
-ENV MYSQL_USER=user
-ENV MYSQL_PASSWORD=password
-
-EXPOSE 3306
-
 COPY ./initdb.d /docker-entrypoint-initdb.d
+
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["mysqld"]
