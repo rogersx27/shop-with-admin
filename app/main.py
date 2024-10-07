@@ -1,10 +1,9 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
 
 from routes.models import categoryRouter, customerRouter, orderRouter, orderItemRouter, productRouter, productDetailRouter
 
-templates = Jinja2Templates(directory="templates")
+from routes.pages import homeRouter
 
 app = FastAPI()
 
@@ -16,7 +15,7 @@ app.include_router(orderRouter.router, prefix="/api")
 app.include_router(orderItemRouter.router, prefix="/api")
 app.include_router(productRouter.router, prefix="/api")
 app.include_router(productDetailRouter.router, prefix="/api")
-
+app.include_router(homeRouter.router)
 
 @app.get("/")
 def read_root():

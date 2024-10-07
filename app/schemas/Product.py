@@ -2,6 +2,8 @@ from pydantic import BaseModel
 from typing import Optional
 from uuid import UUID
 
+from schemas.ProductDetail import ProductDetailBase
+
 
 class ProductBase(BaseModel):
     generic_name: str
@@ -28,13 +30,15 @@ class ProductResponse(ProductBase):
 
     class Config:
         from_attributes = True
-        
+
+
 class ProductLiteResponse(BaseModel):
     name: str
     image_url: Optional[str] = None
     description: Optional[str] = None
     availability: bool = True
-    price: float
+
+    details: Optional[ProductDetailBase]
 
     class Config:
         from_attributes = True

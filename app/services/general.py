@@ -11,7 +11,7 @@ def create_instance(db: Session, model, schema) -> object:
     return db_instance
 
 
-def get_all_instances(db: Session, model) -> list[object]:
+def get_all_instances(db: Session, model):
     return db.query(model).all()
 
 
