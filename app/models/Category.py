@@ -9,5 +9,5 @@ class Category(Base):
     __tablename__ = 'categories'
 
     id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    name = Column(String(255), nullable=False)
+    name = Column(String(255), nullable=False, unique=True)
     products = relationship("Product", back_populates="category")
