@@ -65,27 +65,32 @@ def get_categories(request: Request, db: Session = Depends(get_db)):
 
 ### CRUD de Productos ###
 
+def search_category(db: Session, category_id: str):
+    category = db.query(models.Category).filter( models.Category.id == category_id).first()
+    if not category:
+        raise HTTPException(status_code=404, detail="Category not found")
+    return category
+
 
 @app.post("/products/", response_model=ProductResponse)
 def create_product(product: ProductCreate, db: Session = Depends(get_db)):
-    category = db.query(models.Category).filter(
-        models.Category.id == product.category_id).first()
-    if not category:
-        raise HTTPException(status_code=404, detail="Category not found")
+    category = search_category(db, str(product.category_id))
 
     db_product = models.Product(
-        id=str(uuid.uuid4()),
+        id=str(uuid.uuid4()), 
         name=product.name,
-        category_id=product.category_id,
+        category_id=str(product.category_id),
         price=product.price,
         description=product.description,
         image_url=product.image_url,
         quantity=product.quantity,
         availability=product.availability
     )
+
     db.add(db_product)
     db.commit()
     db.refresh(db_product)
+
     return db_product
 
 
