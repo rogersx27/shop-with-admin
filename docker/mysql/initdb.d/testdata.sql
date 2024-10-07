@@ -2,12 +2,12 @@
 -- INSERT INTO
 --     categories (id, name)
 -- VALUES
---     (UUID (), 'FROM USA'),
---     (UUID (), 'Generic Viagra'),
---     (UUID (), 'Generic Soma'),
---     (UUID (), 'Tapentadol'),
---     (UUID (), 'COVID-19'),
---     (UUID (), 'Anti-Depressants');
+--     ('c011ecac-430b-4b76-9471-123456789000', 'FROM USA'),
+--     ('c011ecac-430b-4b76-9471-123456789001', 'Generic Viagra'),
+--     ('c011ecac-430b-4b76-9471-123456789002', 'Generic Soma'),
+--     ('c011ecac-430b-4b76-9471-123456789003', 'Tapentadol'),
+--     ('c011ecac-430b-4b76-9471-123456789004', 'COVID-19'),
+--     ('c011ecac-430b-4b76-9471-123456789005', 'Anti-Depressants');
 
 -- -- Obtención de los UUID generados para las categorías
 -- SELECT
@@ -16,135 +16,94 @@
 -- FROM
 --     categories;
 
--- -- Inserción de productos (Usamos UUID para las categorías)
+-- -- Inserción de productos (Usamos los UUID para las categorías)
 -- INSERT INTO
 --     products (
 --         id,
---         name,
+--         generic_name,
 --         category_id,
 --         price,
 --         description,
 --         image_url,
---         quantity,
---         availability
+--         availability,
+--         created_at,
+--         updated_at
 --     )
 -- VALUES
 --     (
---         UUID (),
+--         'c021ecac-430b-4b76-9471-123456789010',
 --         'Tramadol 100mg',
---         (
---             SELECT
---                 id
---             FROM
---                 categories
---             WHERE
---                 name = 'FROM USA'
---         ),
+--         'c011ecac-430b-4b76-9471-123456789000',
 --         3.87,
 --         'Tramadol from the USA in 100mg tablets',
 --         '/resources/img/products/tramadol100mg.jpg',
---         '100mg',
---         TRUE
+--         TRUE,
+--         CURRENT_TIMESTAMP,
+--         CURRENT_TIMESTAMP
 --     ),
 --     (
---         UUID (),
+--         'c021ecac-430b-4b76-9471-123456789011',
 --         'Viagra 100mg - USA',
---         (
---             SELECT
---                 id
---             FROM
---                 categories
---             WHERE
---                 name = 'FROM USA'
---         ),
+--         'c011ecac-430b-4b76-9471-123456789000',
 --         2.76,
 --         'Viagra 100mg imported from USA',
 --         '/resources/img/products/viagra100mg.jpg',
---         '100mg',
---         TRUE
+--         TRUE,
+--         CURRENT_TIMESTAMP,
+--         CURRENT_TIMESTAMP
 --     ),
 --     (
---         UUID (),
+--         'c021ecac-430b-4b76-9471-123456789012',
 --         'Viagra 50mg',
---         (
---             SELECT
---                 id
---             FROM
---                 categories
---             WHERE
---                 name = 'Generic Viagra'
---         ),
+--         'c011ecac-430b-4b76-9471-123456789001',
 --         0.73,
 --         'Generic Viagra 50mg tablets',
 --         '/resources/img/products/viagra50mg.jpg',
---         '50mg',
---         TRUE
+--         TRUE,
+--         CURRENT_TIMESTAMP,
+--         CURRENT_TIMESTAMP
 --     ),
 --     (
---         UUID (),
+--         'c021ecac-430b-4b76-9471-123456789013',
 --         'Soma 350mg',
---         (
---             SELECT
---                 id
---             FROM
---                 categories
---             WHERE
---                 name = 'Generic Soma'
---         ),
+--         'c011ecac-430b-4b76-9471-123456789002',
 --         1.00,
 --         'Generic Soma 350mg tablets',
 --         '/resources/img/products/soma350mg.jpg',
---         '350mg',
---         TRUE
+--         TRUE,
+--         CURRENT_TIMESTAMP,
+--         CURRENT_TIMESTAMP
 --     ),
 --     (
---         UUID (),
+--         'c021ecac-430b-4b76-9471-123456789014',
 --         'Tapentadol 100mg',
---         (
---             SELECT
---                 id
---             FROM
---                 categories
---             WHERE
---                 name = 'Tapentadol'
---         ),
+--         'c011ecac-430b-4b76-9471-123456789003',
 --         2.26,
 --         'Tapentadol 100mg tablets for pain relief',
 --         '/resources/img/products/tapentadol100mg.jpg',
---         '100mg',
---         TRUE
+--         TRUE,
+--         CURRENT_TIMESTAMP,
+--         CURRENT_TIMESTAMP
 --     ),
 --     (
---         UUID (),
+--         'c021ecac-430b-4b76-9471-123456789015',
 --         'Hydroxychloroquine Sulphate',
---         (
---             SELECT
---                 id
---             FROM
---                 categories
---             WHERE
---                 name = 'COVID-19'
---         ),
+--         'c011ecac-430b-4b76-9471-123456789004',
 --         1.25,
 --         'Hydroxychloroquine Sulphate tablets for COVID-19',
 --         '/resources/img/products/hydroxychloroquine.jpg',
---         '200mg',
---         TRUE
+--         TRUE,
+--         CURRENT_TIMESTAMP,
+--         CURRENT_TIMESTAMP
 --     ),
 --     (
---         UUID (),
+--         'c021ecac-430b-4b76-9471-123456789016',
 --         'Duloxetine 20 mg',
---         (
---             SELECT
---                 id
---             FROM
---                 categories
---             WHERE
---                 name = 'Anti-Depressants'
---         ),
+--         'c011ecac-430b-4b76-9471-123456789005',
 --         0.85,
 --         'Duloxetine for depression, 20mg',
 --         '/resources/img/products/duloxetine20mg.jpg',
---         '20mg',
---         TRUE
+--         TRUE,
+--         CURRENT_TIMESTAMP,
+--         CURRENT_TIMESTAMP
 --     );
