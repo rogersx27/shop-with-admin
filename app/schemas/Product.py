@@ -28,6 +28,7 @@ class ProductLiteResponse(BaseModel):
     image_url: Optional[str] = None
     description: Optional[str] = None
     availability: bool = True
+    price: float
 
     class Config:
         from_attributes = True
