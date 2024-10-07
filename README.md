@@ -39,7 +39,8 @@ docker-compose up --build -d
 
 # DB UI runs in:
 [localhost:8080](http://localhost:8080/index.php)
-
+user = user
+password = password
 
 # API docs
 
