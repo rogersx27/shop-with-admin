@@ -2,5 +2,6 @@ from .Category import Category
 from .Customer import Customer
 from .Product import Product
 from .Order import Order, OrderItem
+from .ProductDetail import ProductDetail
 from database import Base
 
