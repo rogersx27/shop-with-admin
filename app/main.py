@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from routes.models import categoryRouter, customerRouter, orderRouter
+from routes.models import categoryRouter, customerRouter, orderRouter, orderItemRouter, productRouter, productDetailRouter
 
 templates = Jinja2Templates(directory="templates")
 
@@ -13,6 +13,9 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 app.include_router(categoryRouter.router, prefix="/api")
 app.include_router(customerRouter.router, prefix="/api")
 app.include_router(orderRouter.router, prefix="/api")
+app.include_router(orderItemRouter.router, prefix="/api")
+app.include_router(productRouter.router, prefix="/api")
+app.include_router(productDetailRouter.router, prefix="/api")
 
 
 @app.get("/")
