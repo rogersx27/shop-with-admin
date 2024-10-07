@@ -1,5 +1,6 @@
 from os import name
 from fastapi import FastAPI, Depends, HTTPException, Request
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
 from typing import List
 from fastapi.templating import Jinja2Templates
@@ -9,7 +10,6 @@ import uuid
 import models
 from schemas import CategoryCreate, CategoryResponse, ProductCreate, ProductResponse, CustomerCreate, CustomerResponse, OrderCreate, OrderResponse, OrderItemCreate, OrderItemResponse, CategoryWithProductsResponse, ProductLiteResponse
 
-from schemas import CategoryCreate, CategoryResponse, ProductCreate, ProductResponse, CustomerCreate, CustomerResponse, OrderCreate, OrderResponse, OrderItemCreate, OrderItemResponse
 from database import engine, get_db
 
 models.Base.metadata.create_all(bind=engine)
@@ -17,6 +17,7 @@ models.Base.metadata.create_all(bind=engine)
 templates = Jinja2Templates(directory="templates")
 
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 @app.get("/")
@@ -47,7 +48,8 @@ def get_categories(request: Request, db: Session = Depends(get_db)):
                 name=product.name,
                 image_url=product.image_url,
                 description=product.description,
-                availability=product.availability
+                availability=product.availability,
+                price=product.price
             )
             for product in category.products
         ]
@@ -66,7 +68,8 @@ def get_categories(request: Request, db: Session = Depends(get_db)):
 ### CRUD de Productos ###
 
 def search_category(db: Session, category_id: str):
-    category = db.query(models.Category).filter( models.Category.id == category_id).first()
+    category = db.query(models.Category).filter(
+        models.Category.id == category_id).first()
     if not category:
         raise HTTPException(status_code=404, detail="Category not found")
     return category
@@ -77,7 +80,7 @@ def create_product(product: ProductCreate, db: Session = Depends(get_db)):
     category = search_category(db, str(product.category_id))
 
     db_product = models.Product(
-        id=str(uuid.uuid4()), 
+        id=str(uuid.uuid4()),
         name=product.name,
         category_id=str(product.category_id),
         price=product.price,
@@ -106,6 +109,8 @@ def get_product(product_id: str, db: Session = Depends(get_db)):
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
     return product
+
+@app.get("/")
 
 
 ### CRUD de Clientes ###
