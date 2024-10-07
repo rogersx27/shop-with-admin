@@ -20,18 +20,33 @@ services:
       - ./log/mysql:/var/log/mysql
     networks:
       - local-net
-    # FastAPI
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      retries: 5
+      timeout: 20s
+
+  # FastAPI
   api:
-    links:
-      - db
+    depends_on:
+      db:
+        condition: service_healthy
     container_name: "api"
     build: ./docker/api
+    environment:
+      MYSQL_HOST: db
+      MYSQL_PORT: 3306
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: sample_db
     ports:
       - "8000:8000"
     volumes:
       - ./app:/usr/src/server
     networks:
       - local-net
+
+  # phpMyAdmin
   phpmyadmin:
     container_name: "phpmyadmin"
     image: phpmyadmin/phpmyadmin
