@@ -1,16 +1,20 @@
-from fastapi import FastAPI, Depends, HTTPException
+from os import name
+from fastapi import FastAPI, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
 from typing import List
+from fastapi.templating import Jinja2Templates
 
 import uuid
 
 import models
-from schemas import *
+from schemas import CategoryCreate, CategoryResponse, ProductCreate, ProductResponse, CustomerCreate, CustomerResponse, OrderCreate, OrderResponse, OrderItemCreate, OrderItemResponse, CategoryWithProductsResponse, ProductLiteResponse
 
 from schemas import CategoryCreate, CategoryResponse, ProductCreate, ProductResponse, CustomerCreate, CustomerResponse, OrderCreate, OrderResponse, OrderItemCreate, OrderItemResponse
 from database import engine, get_db
 
 models.Base.metadata.create_all(bind=engine)
+
+templates = Jinja2Templates(directory="templates")
 
 app = FastAPI()
 
@@ -19,7 +23,7 @@ app = FastAPI()
 def read_root():
     return {"Hello": "World"}
 
-
+# TODO: Separar en módulos :)
 ### CRUD de Categorías ###
 
 
@@ -32,9 +36,31 @@ def create_category(category: CategoryCreate, db: Session = Depends(get_db)):
     return db_category
 
 
-@app.get("/categories/", response_model=List[CategoryResponse])
-def get_categories(db: Session = Depends(get_db)):
-    return db.query(models.Category).all()
+@app.get("/categories/")
+def get_categories(request: Request, db: Session = Depends(get_db)):
+    categories = db.query(models.Category).all()
+
+    category_responses: list[CategoryWithProductsResponse] = []
+    for category in categories:
+        products = [
+            ProductLiteResponse(
+                name=product.name,
+                image_url=product.image_url,
+                description=product.description,
+                availability=product.availability
+            )
+            for product in category.products
+        ]
+
+        category_responses.append(
+            CategoryWithProductsResponse(
+                id=uuid.UUID(str(category.id)),
+                name=str(category.name),
+                products=products
+            )
+        )
+
+    return templates.TemplateResponse("index.html", {"request": request, "categories": category_responses})
 
 
 ### CRUD de Productos ###
@@ -138,7 +164,6 @@ def get_order(order_id: str, db: Session = Depends(get_db)):
 
 @app.post("/order_items/", response_model=OrderItemResponse)
 def create_order_item(order_item: OrderItemCreate, db: Session = Depends(get_db)):
-    # Verificar si el pedido y el producto existen
     order = db.query(models.Order).filter(
         models.Order.id == order_item.order_id).first()
     product = db.query(models.Product).filter(
