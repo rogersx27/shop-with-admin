@@ -22,3 +22,12 @@ class ProductResponse(ProductBase):
 
     class Config:
         from_attributes = True
+        
+class ProductLiteResponse(BaseModel):
+    name: str
+    image_url: Optional[str] = None
+    description: Optional[str] = None
+    availability: bool = True
+
+    class Config:
+        from_attributes = True
