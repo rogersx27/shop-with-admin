@@ -14,6 +14,12 @@ class CustomerCreate(CustomerBase):
     pass
 
 
+class CustomerUpdate(BaseModel):
+    name: Optional[str]
+    phone: Optional[str]
+    address: Optional[str]
+
+
 class CustomerResponse(CustomerBase):
     id: UUID
 

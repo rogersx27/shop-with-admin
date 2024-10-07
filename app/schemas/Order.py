@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic import BaseModel
 from uuid import UUID
 
@@ -11,27 +12,15 @@ class OrderCreate(OrderBase):
     pass
 
 
+class OrderUpdate(BaseModel):
+    status: Optional[str]
+    payment_status: Optional[str]
+    total_amount: Optional[float]
+
+
 class OrderResponse(OrderBase):
     id: UUID
     order_date: str
-
-    class Config:
-        from_attributes = True
-
-
-class OrderItemBase(BaseModel):
-    order_id: UUID
-    product_id: UUID
-    quantity: int
-    price: float
-
-
-class OrderItemCreate(OrderItemBase):
-    pass
-
-
-class OrderItemResponse(OrderItemBase):
-    id: UUID
 
     class Config:
         from_attributes = True

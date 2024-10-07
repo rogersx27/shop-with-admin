@@ -4,17 +4,23 @@ from uuid import UUID
 
 
 class ProductBase(BaseModel):
-    name: str
+    generic_name: str
     category_id: UUID
-    price: float
     description: Optional[str] = None
     image_url: Optional[str] = None
-    quantity: Optional[str] = None
     availability: bool = True
 
 
 class ProductCreate(ProductBase):
     pass
+
+
+class ProductUpdate(BaseModel):
+    generic_name: Optional[str]
+    category_id: Optional[UUID]
+    description: Optional[str]
+    image_url: Optional[str]
+    availability: Optional[bool]
 
 
 class ProductResponse(ProductBase):
