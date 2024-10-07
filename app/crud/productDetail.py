@@ -1,7 +1,8 @@
 from sqlalchemy.orm import Session
-from app import models, schemas
+import schemas
+import models
 
-from general import create_instance, delete_instance, get_all_instances, get_instance_by_id, update_instance
+from .general import create_instance, delete_instance, get_all_instances, get_instance_by_id, update_instance
 
 
 def create_productDetail(db: Session, productDetail: schemas.ProductDetailCreate):
