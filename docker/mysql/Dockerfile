@@ -1,4 +1,4 @@
-FROM mysql:5.7
+FROM mysql:8.0
 
 ENV MYSQL_DATABASE=sample_db \
     MYSQL_USER=user \
