@@ -48,21 +48,21 @@
                   <div class="switchers">
                      <form action="/" method="post" class="switchers-item">
                         <div class="sexy-select">
+                           <!-- Seccion de IDIOMA -->
                            <div class="title">English</div>
                         </div>
                      </form>
                      <form action="/" method="post" class="switchers-item">
                         <div class="sexy-select">
+                           <!-- Seccion de MONEDAS -->
                            <div class="title">USD&nbsp;(&#36;)</div>
-                           <select name="currency" id="" onchange="this.form.submit();">
-                              <option value="USD" selected="selected">USD&nbsp;(&#36;)</option>
-                           </select>
                         </div>
                      </form>
                   </div>
                </div>
+               <!-- Carrito -->
                <div class="cart-xs">
-                  <a class="btn btn-add" href="/cart.php"></a>
+                  <a class="btn btn-add" href="/cart.html"></a>
                   <div class="cart-items">
                      <div class="count-items">0 items</div>
                      <div class="total"><sup>&#36;</sup>0.00</div>
@@ -73,10 +73,12 @@
                <div class="form-header-search">
                   <form action="/" method="get">
                      <div class="search">
+                        <!-- Input de busqueda -->
                         <input class="input-search" type="search" name="search" placeholder="Busque las píldoras..."
                            onkeypress="if(event.keyCode==13 && !this.value.length)return false; ">
-                        <button type="submit" class="btn-submit js-classSwitch" data-dbx-name=".input-search"><i
-                              class="icon icon-search"></i></button>
+                        <button type="submit" class="btn-submit js-classSwitch" data-dbx-name=".input-search">
+                           <i class="icon icon-search"></i>
+                        </button>
                      </div>
                      <div class="search_list_container" style="position:relative;"></div>
                   </form>
@@ -110,7 +112,7 @@
                   <div class="content">
                      <p>Su carro está vacío</p>
                   </div>
-                  <a href="/cart.php" class="btn btn-acc btn-rdd">Envio</a>
+                  <a href="/cart.html" class="btn btn-acc btn-rdd">Envio</a>
                </div>
             </div>
          </div>
@@ -124,527 +126,55 @@
       <div class="letter-search clearfix">
          <div class="site">
             <span class="title">Búsqueda por letra:</span>
+
             <ul class="letter-list no-list">
-               <a href="letter-a-co.html" title="A">A</a> <a href="letter-b-co.html" title="B">B</a> <a
-                  href="letter-c-co.html" title="C">C</a> <a href="letter-d-co.html" title="D">D</a> <a
-                  href="letter-e-co.html" title="E">E</a> <a href="letter-f-co.html" title="F">F</a> <a
-                  href="letter-g-co.html" title="G">G</a> <a href="letter-h-co.html" title="H">H</a> <a
-                  href="letter-i-co.html" title="I">I</a> <a href="letter-j-co.html" title="J">J</a> <a
-                  href="letter-k-co.html" title="K">K</a> <a href="letter-l-co.html" title="L">L</a> <a
-                  href="letter-m-co.html" title="M">M</a> <a href="letter-n-co.html" title="N">N</a> <a
-                  href="letter-o-co.html" title="O">O</a> <a href="letter-p-co.html" title="P">P</a> <a
-                  href="letter-q-co.html" title="Q">Q</a> <a href="letter-r-co.html" title="R">R</a> <a
-                  href="letter-s-co.html" title="S">S</a> <a href="letter-t-co.html" title="T">T</a> <a
-                  href="letter-u-co.html" title="U">U</a> <a href="letter-v-co.html" title="V">V</a> <a
-                  href="letter-w-co.html" title="W">W</a> <a href="letter-x-co.html" title="X">X</a> <a
-                  href="letter-y-co.html" title="Y">Y</a> <a href="letter-z-co.html" title="Z">Z</a>
+               {% for letter in letters %}
+            <a href="/products/start/{{ letter }}/" title="{{ letter }}">{{ letter }}</a>
+               {% endfor %}
             </ul>
          </div>
-      </div><!-- blocks_bestsellers START -->
+      </div>
+      <!-- blocks_bestsellers START -->
       <section class="bestsellers">
          <div class="site">
             <h2>Bestsellers</h2>
             <!-- list-product START -->
             <div class="">
                <div class="list-product clearfix">
-                  <!-- list-product-item START -->
-                  <a href="buy-viagra-co.html" class="list-product-item-box">
+                  {% for product in best_sellers %}
+                  <a href="/product/{{ product.id }}.html" class="list-product-item-box">
                      <div class="list-product-item">
                         <div class="product-short-info clearfix">
                            <div class="product-item-img">
-                              <img class="" src="/images/viagra.gif" alt="Viagra" />
+                              <img class="" src="{{ product.image }}" alt="{{ product.name }}" />
                            </div>
                            <div class="product-descr">
                               <div class="product-item-heading">
                                  <h3 class="product-name">
-                                    <span><span>Viagra</span></span>
+                                    <span><span>{{ product.generic_name }}</span></span>
                                  </h3>
                               </div>
-                              <p>Generic Viagra es el primero y el remedio más conocido para la erección masculina. Su
-                                 ingrediente activo es llamado Sildenafil. Proporciona incremento del flujo sanguíneo al
-                                 área genital masculino. El cuerpo cavernoso está relajado, a continuación, se llenan de
-                                 sangre abundantemente, por lo que aparece una erección suficiente para realizar un acto
-                                 de intimidad. Sildenafil no tiene ningún efecto sobre el cerebro. Una erección se logra
-                                 sólo si hay una excitación sexual natural.</p>
+                              <p>{{ product.description }}</p>
                            </div>
                            <span class="more-info hidden-mob">más informai&oacute;n </buy-viagra-co.html>
                         </div>
                         <div class="product-item-purchase clearfix">
                            <div class="price">
-                              <sup>&#36;</sup>0.50
+                              <sup>&#36;</sup>{{ product.details.price }}
                            </div>
                            <div class="add-prod hidden-md"></div>
                            <div class="add-prod add-prod2"><span class="btn-add"></span></div>
                         </div>
                      </div>
                   </a>
-                  <!-- list-product-item END --> <!-- list-product-item START -->
-                  <a href="buy-levitra-co.html" class="list-product-item-box">
-                     <div class="list-product-item">
-                        <div class="product-short-info clearfix">
-                           <div class="product-item-img">
-                              <img class="" src="/images/levitra.gif" alt="Levitra" />
-                           </div>
-                           <div class="product-descr">
-                              <div class="product-item-heading">
-                                 <h3 class="product-name">
-                                    <span><span>Levitra</span></span>
-                                 </h3>
-                              </div>
-                              <p>Generic Levitra - un fármaco diseñado para los hombres con una función eréctil e
-                                 impotencia sexual. Gracias al vardenafilo ingrediente activo logra mediante el
-                                 fortalecimiento de la potencia y restauró la salud del sistema reproductivo. El
-                                 producto está hecho de componentes, no adictivos e inofensivo para el cuerpo. Diseñado
-                                 para los que están contraindicados para Viagra debido a las alergias a su componente
-                                 principal, o aquellos que tienen diabetes. Sólo Levitra genérico a diferencia de Viagra
-                                 se puede tomar con cualquier alimento. Otra ventaja es que hay menos probabilidad de
-                                 efectos secundarios.</p>
-                           </div>
-                           <span class="more-info hidden-mob">más informai&oacute;n </buy-levitra-co.html>
-                        </div>
-                        <div class="product-item-purchase clearfix">
-                           <div class="price">
-                              <sup>&#36;</sup>1.05
-                           </div>
-                           <div class="add-prod hidden-md"></div>
-                           <div class="add-prod add-prod2"><span class="btn-add"></span></div>
-                        </div>
-                     </div>
-                  </a>
-                  <!-- list-product-item END --> <!-- list-product-item START -->
-                  <a href="buy-kamagra-co.html" class="list-product-item-box">
-                     <div class="list-product-item">
-                        <div class="product-short-info clearfix">
-                           <div class="product-item-img">
-                              <img class="" src="/images/kamagra.gif" alt="Kamagra" />
-                           </div>
-                           <div class="product-descr">
-                              <div class="product-item-heading">
-                                 <h3 class="product-name">
-                                    <span><span>Kamagra®</span></span>
-                                 </h3>
-                              </div>
-                              <p>Kamagra® - una marca hindú de Ajanta Pharma, elaborada para mejorar la potencia
-                                 masculina. Este producto funciona totalmente de la misma manera que la marca Viagra. El
-                                 resultado es una erección potente y fuerte dentro de 40 a 60 minutos después de la
-                                 ingesta y el efecto dura 4 horas. También está disponible en forma de píldoras en forma
-                                 de rombos. Tras una serie de pruebas clínicas no se destacó la adicción a este
-                                 medicamento, por lo tanto se puede tomarlo con fines preventivos también.</p>
-                           </div>
-                           <span class="more-info hidden-mob">más informai&oacute;n </buy-kamagra-co.html>
-                        </div>
-                        <div class="product-item-purchase clearfix">
-                           <div class="price">
-                              <sup>&#36;</sup>1.50
-                           </div>
-                           <div class="add-prod hidden-md"></div>
-                           <div class="add-prod add-prod2"><span class="btn-add"></span></div>
-                        </div>
-                     </div>
-                  </a>
-                  <!-- list-product-item END --> <!-- list-product-item START -->
-                  <a href="buy-synthroid-co.html" class="list-product-item-box">
-                     <div class="list-product-item">
-                        <div class="product-short-info clearfix">
-                           <div class="product-item-img">
-                              <img class="" src="/images/synthroid.gif" alt="Synthroid" />
-                           </div>
-                           <div class="product-descr">
-                              <div class="product-item-heading">
-                                 <h3 class="product-name">
-                                    <span><span>Synthroid</span></span>
-                                 </h3>
-                              </div>
-                              <p>El Synthroid Genérico se utiliza para tratar la actividad baja de la tiroides y tratar
-                                 o suprimir diferentes tipos de bocio. También se utiliza con la cirugía y otros
-                                 medicamentos para controlar ciertos tipos de cáncer de tiroides.</p>
-                           </div>
-                           <span class="more-info hidden-mob">más informai&oacute;n </buy-synthroid-co.html>
-                        </div>
-                        <div class="product-item-purchase clearfix">
-                           <div class="price">
-                              <sup>&#36;</sup>0.14
-                           </div>
-                           <div class="add-prod hidden-md"></div>
-                           <div class="add-prod add-prod2"><span class="btn-add"></span></div>
-                        </div>
-                     </div>
-                  </a>
-                  <!-- list-product-item END --> <!-- list-product-item START -->
-                  <a href="buy-propecia-co.html" class="list-product-item-box">
-                     <div class="list-product-item">
-                        <div class="product-short-info clearfix">
-                           <div class="product-item-img">
-                              <img class="" src="/images/propecia.gif" alt="Propecia" />
-                           </div>
-                           <div class="product-descr">
-                              <div class="product-item-heading">
-                                 <h3 class="product-name">
-                                    <span><span>Propecia</span></span>
-                                 </h3>
-                              </div>
-                              <p>El Propecia Genérico se utiliza para tratar los síntomas de la hiperplasia prostática
-                                 benigna (HPB) en hombres con una próstata agrandada. También se utiliza para tratar
-                                 ciertos tipos de caída del cabello masculina (alopecia androgénica) en hombres. </p>
-                           </div>
-                           <span class="more-info hidden-mob">más informai&oacute;n </buy-propecia-co.html>
-                        </div>
-                        <div class="product-item-purchase clearfix">
-                           <div class="price">
-                              <sup>&#36;</sup>0.50
-                           </div>
-                           <div class="add-prod hidden-md"></div>
-                           <div class="add-prod add-prod2"><span class="btn-add"></span></div>
-                        </div>
-                     </div>
-                  </a>
-                  <!-- list-product-item END --> <!-- list-product-item START -->
-                  <a href="buy-female-viagra-co.html" class="list-product-item-box">
-                     <div class="list-product-item">
-                        <div class="product-short-info clearfix">
-                           <div class="product-item-img">
-                              <img class="" src="/images/female-viagra.gif" alt="Female Viagra" />
-                           </div>
-                           <div class="product-descr">
-                              <div class="product-item-heading">
-                                 <h3 class="product-name">
-                                    <span><span>Female Viagra</span></span>
-                                 </h3>
-                              </div>
-                              <p>El Viagra Femenino Genérico ofrece una propuesta seria a los problemas del trastorno de
-                                 la excitación sexual femenina (TESF) y de la disfunción sexual femenina (DSF), está
-                                 formulado científicamente para satisfacer las necesidades sexuales y dar un placer
-                                 duradero.</p>
-                           </div>
-                           <span class="more-info hidden-mob">más informai&oacute;n </buy-female-viagra-co.html>
-                        </div>
-                        <div class="product-item-purchase clearfix">
-                           <div class="price">
-                              <sup>&#36;</sup>0.85
-                           </div>
-                           <div class="add-prod hidden-md"></div>
-                           <div class="add-prod add-prod2"><span class="btn-add"></span></div>
-                        </div>
-                     </div>
-                  </a>
-                  <!-- list-product-item END --> <!-- list-product-item START -->
-                  <a href="buy-cialis-soft-co.html" class="list-product-item-box">
-                     <div class="list-product-item">
-                        <div class="product-short-info clearfix">
-                           <div class="product-item-img">
-                              <img class="" src="/images/cialis-soft.gif" alt="Cialis Soft" />
-                           </div>
-                           <div class="product-descr">
-                              <div class="product-item-heading">
-                                 <h3 class="product-name">
-                                    <span><span>Cialis Soft</span></span>
-                                 </h3>
-                              </div>
-                              <p>El Cialis Blando Genérico es un medicamento que combina las dos principales
-                                 características importantes para tratar la impotencia masculina (Disfunción Eréctil):
-                                 actuación rápida y efecto prolongado. Usted puede tomar el medicamento en la mañana y
-                                 estar listo para el momento perfecto durante ese día, noche o incluso durante el día
-                                 siguiente.</p>
-                           </div>
-                           <span class="more-info hidden-mob">más informai&oacute;n </buy-cialis-soft-co.html>
-                        </div>
-                        <div class="product-item-purchase clearfix">
-                           <div class="price">
-                              <sup>&#36;</sup>1.00
-                           </div>
-                           <div class="add-prod hidden-md"></div>
-                           <div class="add-prod add-prod2"><span class="btn-add"></span></div>
-                        </div>
-                     </div>
-                  </a>
-                  <!-- list-product-item END --> <!-- list-product-item START -->
-                  <a href="buy-amoxil-co.html" class="list-product-item-box">
-                     <div class="list-product-item">
-                        <div class="product-short-info clearfix">
-                           <div class="product-item-img">
-                              <img class="" src="/images/amoxil.gif" alt="Amoxil" />
-                           </div>
-                           <div class="product-descr">
-                              <div class="product-item-heading">
-                                 <h3 class="product-name">
-                                    <span><span>Amoxil</span></span>
-                                 </h3>
-                              </div>
-                              <p>El Amoxil Genérico se utiliza para tratar las infecciones causadas por ciertas
-                                 bacterias. También se utiliza con otros medicamentos para tratar la infección por H.
-                                 pylori y las úlceras del intestino delgado. La amoxicilina es un antibiótico de
-                                 penicilina. Funciona matando a las bacterias sensibles.</p>
-                           </div>
-                           <span class="more-info hidden-mob">más informai&oacute;n </buy-amoxil-co.html>
-                        </div>
-                        <div class="product-item-purchase clearfix">
-                           <div class="price">
-                              <sup>&#36;</sup>0.42
-                           </div>
-                           <div class="add-prod hidden-md"></div>
-                           <div class="add-prod add-prod2"><span class="btn-add"></span></div>
-                        </div>
-                     </div>
-                  </a>
-                  <!-- list-product-item END --> <!-- list-product-item START -->
-                  <a href="buy-cialis-pack-co.html" class="list-product-item-box">
-                     <div class="list-product-item">
-                        <div class="product-short-info clearfix">
-                           <div class="product-item-img">
-                              <img class="" src="/images/cialis-pack.gif" alt="Cialis Pack" />
-                           </div>
-                           <div class="product-descr">
-                              <div class="product-item-heading">
-                                 <h3 class="product-name">
-                                    <span><span>Cialis Pack</span></span>
-                                 </h3>
-                              </div>
-                              <p>Prueba tadalafilo en diferentes formas para elegir la mejor forma sólo para ti. Este
-                                 pack incluye Cialis, Cialis Súper Active, Cialis Professional todos con la dosis de 20
-                                 mg pero en formas diferentes: píldoras, cápsulas de soft-gel y tabletas sublinguales.
-                                 Además es más barato que comprar tres packs de Cialis por separado.</p>
-                           </div>
-                           <span class="more-info hidden-mob">más informai&oacute;n </buy-cialis-pack-co.html>
-                        </div>
-                        <div class="product-item-purchase clearfix">
-                           <div class="price">
-                              <sup>&#36;</sup>1.50
-                           </div>
-                           <div class="add-prod hidden-md"></div>
-                           <div class="add-prod add-prod2"><span class="btn-add"></span></div>
-                        </div>
-                     </div>
-                  </a>
-                  <!-- list-product-item END --> <!-- list-product-item START -->
-                  <a href="buy-cialis-super-force-co.html" class="list-product-item-box">
-                     <div class="list-product-item">
-                        <div class="product-short-info clearfix">
-                           <div class="product-item-img">
-                              <img class="" src="/images/cialis-super-force.gif" alt="Cialis Super Force" />
-                           </div>
-                           <div class="product-descr">
-                              <div class="product-item-heading">
-                                 <h3 class="product-name">
-                                    <span><span>Cialis Super Force</span></span>
-                                 </h3>
-                              </div>
-                              <p>Cialis Super Force es comparativamente nueva preparación en el mercado farmacéutico
-                                 mundial! Cada comprimido - es una fusión de dos ingredientes activos: Tadalafilo (20
-                                 mg), lo que aumenta el flujo sanguíneo a los genitales y la dapoxetina (60 mg), lo que
-                                 impide la eyaculación precoz. El fármaco tiene una amplia gama de aplicaciones: se
-                                 utiliza no sólo en el tratamiento de la erección débil y la eyaculación precoz, sino
-                                 también para mejorar la potencia y la resistencia del sistema reproductivo, aumentar la
-                                 duración de la relación sexual. Su eficacia es ideal. Por otra parte, la compra de dos
-                                 productos en uno, se ahorra significativamente!</p>
-                           </div>
-                           <span class="more-info hidden-mob">más informai&oacute;n </buy-cialis-super-force-co.html>
-                        </div>
-                        <div class="product-item-purchase clearfix">
-                           <div class="price">
-                              <sup>&#36;</sup>2.00
-                           </div>
-                           <div class="add-prod hidden-md"></div>
-                           <div class="add-prod add-prod2"><span class="btn-add"></span></div>
-                        </div>
-                     </div>
-                  </a>
-                  <!-- list-product-item END --> <!-- list-product-item START -->
-                  <a href="buy-diflucan-co.html" class="list-product-item-box">
-                     <div class="list-product-item">
-                        <div class="product-short-info clearfix">
-                           <div class="product-item-img">
-                              <img class="" src="/images/diflucan.gif" alt="Diflucan" />
-                           </div>
-                           <div class="product-descr">
-                              <div class="product-item-heading">
-                                 <h3 class="product-name">
-                                    <span><span>Diflucan</span></span>
-                                 </h3>
-                              </div>
-                              <p>El Diflucan Genérico es un antibiótico antifúngico. Se utiliza para tratar las
-                                 infecciones causadas por hongos, los cuales pueden invadir cualquier parte del cuerpo
-                                 incluyendo la boca, la garganta, los pulmones, la vejiga, los genitales y la sangre.
-                              </p>
-                           </div>
-                           <span class="more-info hidden-mob">más informai&oacute;n </buy-diflucan-co.html>
-                        </div>
-                        <div class="product-item-purchase clearfix">
-                           <div class="price">
-                              <sup>&#36;</sup>0.70
-                           </div>
-                           <div class="add-prod hidden-md"></div>
-                           <div class="add-prod add-prod2"><span class="btn-add"></span></div>
-                        </div>
-                     </div>
-                  </a>
-                  <!-- list-product-item END --> <!-- list-product-item START -->
-                  <a href="buy-hepcinat-co.html" class="list-product-item-box">
-                     <div class="list-product-item">
-                        <div class="product-short-info clearfix">
-                           <div class="product-item-img">
-                              <img class="" src="/images/hepcinat.gif" alt="Hepcinat" />
-                           </div>
-                           <div class="product-descr">
-                              <div class="product-item-heading">
-                                 <h3 class="product-name">
-                                    <span><span>Hepcinat®</span></span>
-                                 </h3>
-                              </div>
-                              <p>Hepcinat® - contiene Sofosbuvir 400mg, el medicamento más nuevo desarrollado por la
-                                 compañía india Natco Pharma mediante los equipos de alta tecnología de conformidad con
-                                 todos los estándares y requisitos necesarios. El medicamento se usa para tratar la
-                                 hepatitis C crónica. El tratamiento con sofosbuvir se usa en un complejo con otros
-                                 antivirales durante una "terapia sin interferón" en prácticamente todas las clínicas
-                                 líderes de todo el mundo, ya que este medicamento, que se ha sometido a muchos ensayos
-                                 clínicos y estudios, mostró buenos resultados. La efectividad del nuevo medicamento
-                                 para diferentes genotipos del virus es de 92-96%.</p>
-                           </div>
-                           <span class="more-info hidden-mob">más informai&oacute;n </buy-hepcinat-co.html>
-                        </div>
-                        <div class="product-item-purchase clearfix">
-                           <div class="price">
-                              <sup>&#36;</sup>42.86
-                           </div>
-                           <div class="add-prod hidden-md"></div>
-                           <div class="add-prod add-prod2"><span class="btn-add"></span></div>
-                        </div>
-                     </div>
-                  </a>
-                  <!-- list-product-item END --> <!-- list-product-item START -->
-                  <a href="buy-januvia-co.html" class="list-product-item-box">
-                     <div class="list-product-item">
-                        <div class="product-short-info clearfix">
-                           <div class="product-item-img">
-                              <img class="" src="/images/januvia.gif" alt="Januvia" />
-                           </div>
-                           <div class="product-descr">
-                              <div class="product-item-heading">
-                                 <h3 class="product-name">
-                                    <span><span>Januvia</span></span>
-                                 </h3>
-                              </div>
-                              <p>La Januvia es un medicamento oral para la diabetes que ayuda a controlar los niveles de
-                                 azúcar en la sangre. Funciona regulando los niveles de insulina que el cuerpo produce
-                                 después de comer.</p>
-                           </div>
-                           <span class="more-info hidden-mob">más informai&oacute;n </buy-januvia-co.html>
-                        </div>
-                        <div class="product-item-purchase clearfix">
-                           <div class="price">
-                              <sup>&#36;</sup>1.75
-                           </div>
-                           <div class="add-prod hidden-md"></div>
-                           <div class="add-prod add-prod2"><span class="btn-add"></span></div>
-                        </div>
-                     </div>
-                  </a>
-                  <!-- list-product-item END --> <!-- list-product-item START -->
-                  <a href="buy-lenalidomide-co.html" class="list-product-item-box">
-                     <div class="list-product-item">
-                        <div class="product-short-info clearfix">
-                           <div class="product-item-img">
-                              <img class="" src="/images/lenalidomide.gif" alt="Lenalidomide" />
-                           </div>
-                           <div class="product-descr">
-                              <div class="product-item-heading">
-                                 <h3 class="product-name">
-                                    <span><span>Lenalidomide</span></span>
-                                 </h3>
-                              </div>
-                              <p>El Lenalidomida afecta al sistema inmunitario. Facilita la respuesta inmune, ayudando a
-                                 ralentizar el crecimiento tumoral.
-                                 Lenalidomide está indicado en el tratamiento de la anemia (carencia de glóbulos rojos
-                                 en el cuerpo), el mieloma múltiple (un cancer causado por una enfermedad degenerativa
-                                 de la sangre), y el linfoma de células de manto (un cancer poco frecuente que afecta a
-                                 los ganglios linfáticos). Es usado por pacientes con síndrome mielodisplásico causado
-                                 por una anomalía cromosómica. Esta enfermedad es también conocida como el síndrome 5q,
-                                 ya que se debe a la ausencia de una parte del cromosoma 5. La médula espinal de las
-                                 personas afectadas por esta enfermedad no produce glóbulos rojos sanos en cantidad
-                                 suficiente.
-                                 No se recomienda emplear Lenalidomide para el tratamiento de la leucemia linfática
-                                 crónica (LLC) si no es en el contexto de un estudio médico controlado. La lenalidomida
-                                 podría aumentar el riesgo de muerte a causa de problemas cardiacos severos en pacientes
-                                 con LLC.
-                              </p>
-                           </div>
-                           <span class="more-info hidden-mob">más informai&oacute;n </buy-lenalidomide-co.html>
-                        </div>
-                        <div class="product-item-purchase clearfix">
-                           <div class="price">
-                              <sup>&#36;</sup>4.00
-                           </div>
-                           <div class="add-prod hidden-md"></div>
-                           <div class="add-prod add-prod2"><span class="btn-add"></span></div>
-                        </div>
-                     </div>
-                  </a>
-                  <!-- list-product-item END --> <!-- list-product-item START -->
-                  <a href="buy-levitra-professional-co.html" class="list-product-item-box">
-                     <div class="list-product-item">
-                        <div class="product-short-info clearfix">
-                           <div class="product-item-img">
-                              <img class="" src="/images/levitra-professional.gif" alt="Levitra Professional" />
-                           </div>
-                           <div class="product-descr">
-                              <div class="product-item-heading">
-                                 <h3 class="product-name">
-                                    <span><span>Levitra Professional</span></span>
-                                 </h3>
-                              </div>
-                              <p>Levitra Professional es la "próxima generación" de Levitra®. Es una versión modificada
-                                 del fármaco vardenafilo utilizado para tratar la disfunción eréctil.</p>
-                           </div>
-                           <span class="more-info hidden-mob">más informai&oacute;n </buy-levitra-professional-co.html>
-                        </div>
-                        <div class="product-item-purchase clearfix">
-                           <div class="price">
-                              <sup>&#36;</sup>2.50
-                           </div>
-                           <div class="add-prod hidden-md"></div>
-                           <div class="add-prod add-prod2"><span class="btn-add"></span></div>
-                        </div>
-                     </div>
-                  </a>
-                  <!-- list-product-item END --> <!-- list-product-item START -->
-                  <a href="buy-levitra-super-force-co.html" class="list-product-item-box">
-                     <div class="list-product-item">
-                        <div class="product-short-info clearfix">
-                           <div class="product-item-img">
-                              <img class="" src="/images/levitra-super-force.gif" alt="Levitra Super Force" />
-                           </div>
-                           <div class="product-descr">
-                              <div class="product-item-heading">
-                                 <h3 class="product-name">
-                                    <span><span>Levitra Super Force</span></span>
-                                 </h3>
-                              </div>
-                              <p>¡Levitra Super Force es el fármaco más nuevo y moderno en el mercado farmacéutico
-                                 internacional! Cada comprimido contiene una combinación de dos ingredientes activos:
-                                 Vardenafil 20 mg (que aumenta el flujo sanguíneo a los genitales) y 60 mg de dapoxetina
-                                 (que impide la eyaculación precoz). El fármaco tiene una amplia gama de aplicaciones,
-                                 puede ser utilizado no sólo para la prevención de la eyaculación precoz, sino también
-                                 para mejorar las erecciones y prolongar el orgasmo. La compra de dos fármacos en uno,
-                                 en lugar de ordenar los fármacos por separado, se ahorra una cantidad suficiente de
-                                 dinero y sentirse más cómodo al tomar sólo una pastilla!</p>
-                           </div>
-                           <span class="more-info hidden-mob">más informai&oacute;n </buy-levitra-super-force-co.html>
-                        </div>
-                        <div class="product-item-purchase clearfix">
-                           <div class="price">
-                              <sup>&#36;</sup>3.50
-                           </div>
-                           <div class="add-prod hidden-md"></div>
-                           <div class="add-prod add-prod2"><span class="btn-add"></span></div>
-                        </div>
-                     </div>
-                  </a>
-                  <!-- list-product-item END -->
+                  {% endfor %}
                </div>
             </div>
             <!-- list-product END -->
          </div>
       </section>
-      <!-- blocks_bestsellers END --><!-- blocks_advantage START -->
+      <!-- blocks_bestsellers END -->
+      <!-- blocks_advantage START -->
       <div id="advantages-container">
          <div class="site">
             <ul class="list-advantages no-list clearfix">
