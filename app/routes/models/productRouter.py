@@ -45,6 +45,6 @@ def get_best_sellers_by_sales(db: Session = Depends(get_db)):
     return service.get_best_sellers_by_sales(db=db)
 
 
-@router.get("/products/{num_products}/", response_model=List[schemas.ProductResponse])
+@router.get("/products/some/{num_products}/", response_model=List[schemas.ProductResponse])
 def get_some_products(num_products: int = 5, db: Session = Depends(get_db)):
     return service.get_random_products(db=db, num_products=num_products)
