@@ -48,3 +48,8 @@ def get_best_sellers_by_sales(db: Session = Depends(get_db)):
 @router.get("/products/some/{num_products}/", response_model=List[schemas.ProductResponse])
 def get_some_products(num_products: int = 5, db: Session = Depends(get_db)):
     return service.get_random_products(db=db, num_products=num_products)
+
+
+@router.get("/products/abc/{letter}/", response_model=List[schemas.ProductLiteResponse])
+def get_products_by_letter(letter: str, db: Session = Depends(get_db)):
+    return service.get_all_products_by_first_letter(db=db, letter=letter)

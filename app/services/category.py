@@ -51,7 +51,7 @@ def get_categories_with_products(db: Session) -> List[schemas.CategoryWithProduc
 
             products.append(
                 schemas.ProductLiteResponse(
-                    name=product.generic_name,
+                    generic_name=product.generic_name,
                     image_url=product.image_url,
                     description=product.description,
                     availability=product.availability,
@@ -66,5 +66,7 @@ def get_categories_with_products(db: Session) -> List[schemas.CategoryWithProduc
                 products=products,
             )
         )
+        
+    #  category_responses_2: List[schemas.CategoryWithProductsResponse] = [schemas.CategoryWithProductsResponse.model_validate(category) for category in categories]
         
     return category_responses
