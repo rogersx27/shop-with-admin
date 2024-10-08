@@ -32,7 +32,7 @@ class ProductDetailUpdate(BaseModel):
 
 
 class ProductDetailResponse(ProductDetailBase):
-    product_id: Optional[UUID]
+    product_id: UUID
 
     class Config:
         from_attributes = True
