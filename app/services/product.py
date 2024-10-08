@@ -37,20 +37,23 @@ def get_best_sellers_by_field(db: Session):
         raise HTTPException(status_code=404, detail="No best sellers found")
 
     products_info = utils.get_list_product_info(products)
-    
+
     return products_info
 
 
 def get_best_sellers_by_sales(db: Session):
-    products = db.query(models.Product).filter(
-        models.Product.order_items != None).all()
+    products = db.query(models.Product).options(
+        joinedload(models.Product.product_details)
+    ).filter(models.Product.order_items != None).all()
 
     products.sort(key=lambda x: len(x.order_items), reverse=True)
 
-    if len(products) == 0:
+    if not products:
         raise HTTPException(status_code=404, detail="No best sellers found")
+    
+    products_info = utils.get_list_product_info(products)
 
-    return products[:5]
+    return products_info[:5]
 
 
 def get_random_products(db: Session, num_products: int):
@@ -61,8 +64,10 @@ def get_random_products(db: Session, num_products: int):
             status_code=404, detail="Not enough products to show")
 
     five_products = random.sample(all_products, num_products)
+    
+    products_info = utils.get_list_product_info(five_products)
 
-    return five_products
+    return products_info
 
 
 def get_all_products_by_first_letter(db: Session, letter: str):

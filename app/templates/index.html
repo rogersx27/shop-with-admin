@@ -86,7 +86,9 @@
                <!-- forms_search END --> <!-- blocks_review-item START -->
                <ul class="list-profits no-list clearfix">
                   <li class="profit-testimonials">
-                     <a href="/testimonials-co.html"><span>Comentarios</span></a>
+                     <a href="/testimonials-co.html">
+                        <span>Comentarios</span>
+                     </a>
                   </li>
                   <li class="profit-bonuses">
                      <a href="/bonuses-co.html">
@@ -218,121 +220,33 @@
                <!-- list-product START -->
                <ul class="list-product clearfix">
                   <!-- list-product-item START -->
-                  <a href="buy-propecia-co.html" class="list-product-item-box">
+                  {% for product in random_products %}
+                  <a href="/product/{{ product.id }}.html" class="list-product-item-box">
                      <div class="list-product-item">
                         <div class="product-short-info clearfix">
                            <div class="product-item-img">
-                              <img class="" src="/images/propecia.gif" alt="Propecia" />
+                              <img class="" src="{{ product.image }}" alt="{{ product.name }}" />
                            </div>
                            <div class="product-descr">
                               <div class="product-item-heading">
                                  <h3 class="product-name">
-                                    <span><span>Propecia</span></span>
+                                    <span><span>{{ product.generic_name }}</span></span>
                                  </h3>
                               </div>
-                              <p>El Propecia Genérico se utiliza para tratar los síntomas de la hiperplasia prostática
-                                 benigna (HPB) en hombres con una próstata agrandada. También se utiliza para tratar
-                                 ciertos tipos de caída del cabello masculina (alopecia androgénica) en hombres. </p>
+                              <p>{{ product.description }}</p>
                            </div>
-                           <span class="more-info hidden-mob">más informai&oacute;n </buy-propecia-co.html>
+                           <span class="more-info hidden-mob">más informai&oacute;n </span>
                         </div>
                         <div class="product-item-purchase clearfix">
                            <div class="price">
-                              <sup>&#36;</sup>0.50
+                              <sup>&#36;</sup>{{ product.details.price }}
                            </div>
                            <div class="add-prod hidden-md"></div>
                            <div class="add-prod add-prod2"><span class="btn-add"></span></div>
                         </div>
                      </div>
                   </a>
-                  <!-- list-product-item END --> <!-- list-product-item START -->
-                  <a href="buy-female-viagra-co.html" class="list-product-item-box">
-                     <div class="list-product-item">
-                        <div class="product-short-info clearfix">
-                           <div class="product-item-img">
-                              <img class="" src="/images/female-viagra.gif" alt="Female Viagra" />
-                           </div>
-                           <div class="product-descr">
-                              <div class="product-item-heading">
-                                 <h3 class="product-name">
-                                    <span><span>Female Viagra</span></span>
-                                 </h3>
-                              </div>
-                              <p>El Viagra Femenino Genérico ofrece una propuesta seria a los problemas del trastorno de
-                                 la excitación sexual femenina (TESF) y de la disfunción sexual femenina (DSF), está
-                                 formulado científicamente para satisfacer las necesidades sexuales y dar un placer
-                                 duradero.</p>
-                           </div>
-                           <span class="more-info hidden-mob">más informai&oacute;n </buy-female-viagra-co.html>
-                        </div>
-                        <div class="product-item-purchase clearfix">
-                           <div class="price">
-                              <sup>&#36;</sup>0.85
-                           </div>
-                           <div class="add-prod hidden-md"></div>
-                           <div class="add-prod add-prod2"><span class="btn-add"></span></div>
-                        </div>
-                     </div>
-                  </a>
-                  <!-- list-product-item END --> <!-- list-product-item START -->
-                  <a href="buy-cialis-soft-co.html" class="list-product-item-box">
-                     <div class="list-product-item">
-                        <div class="product-short-info clearfix">
-                           <div class="product-item-img">
-                              <img class="" src="/images/cialis-soft.gif" alt="Cialis Soft" />
-                           </div>
-                           <div class="product-descr">
-                              <div class="product-item-heading">
-                                 <h3 class="product-name">
-                                    <span><span>Cialis Soft</span></span>
-                                 </h3>
-                              </div>
-                              <p>El Cialis Blando Genérico es un medicamento que combina las dos principales
-                                 características importantes para tratar la impotencia masculina (Disfunción Eréctil):
-                                 actuación rápida y efecto prolongado. Usted puede tomar el medicamento en la mañana y
-                                 estar listo para el momento perfecto durante ese día, noche o incluso durante el día
-                                 siguiente.</p>
-                           </div>
-                           <span class="more-info hidden-mob">más informai&oacute;n </buy-cialis-soft-co.html>
-                        </div>
-                        <div class="product-item-purchase clearfix">
-                           <div class="price">
-                              <sup>&#36;</sup>1.00
-                           </div>
-                           <div class="add-prod hidden-md"></div>
-                           <div class="add-prod add-prod2"><span class="btn-add"></span></div>
-                        </div>
-                     </div>
-                  </a>
-                  <!-- list-product-item END --> <!-- list-product-item START -->
-                  <a href="buy-amoxil-co.html" class="list-product-item-box">
-                     <div class="list-product-item">
-                        <div class="product-short-info clearfix">
-                           <div class="product-item-img">
-                              <img class="" src="/images/amoxil.gif" alt="Amoxil" />
-                           </div>
-                           <div class="product-descr">
-                              <div class="product-item-heading">
-                                 <h3 class="product-name">
-                                    <span><span>Amoxil</span></span>
-                                 </h3>
-                              </div>
-                              <p>El Amoxil Genérico se utiliza para tratar las infecciones causadas por ciertas
-                                 bacterias. También se utiliza con otros medicamentos para tratar la infección por H.
-                                 pylori y las úlceras del intestino delgado. La amoxicilina es un antibiótico de
-                                 penicilina. Funciona matando a las bacterias sensibles.</p>
-                           </div>
-                           <span class="more-info hidden-mob">más informai&oacute;n </buy-amoxil-co.html>
-                        </div>
-                        <div class="product-item-purchase clearfix">
-                           <div class="price">
-                              <sup>&#36;</sup>0.42
-                           </div>
-                           <div class="add-prod hidden-md"></div>
-                           <div class="add-prod add-prod2"><span class="btn-add"></span></div>
-                        </div>
-                     </div>
-                  </a>
+                  {% endfor %}
                   <!-- list-product-item END -->
                </ul>
                <!-- list-product END -->

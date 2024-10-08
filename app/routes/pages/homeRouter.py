@@ -13,14 +13,17 @@ router = APIRouter(tags=["Pages"])
 @router.get("/home/", response_class=HTMLResponse)
 def get_categories(request: Request, db: Session = Depends(get_db)):
     category_responses = services.category.get_categories_with_products(db=db)
-    letters = [chr(i) for i in range(ord('A'), ord('Z') + 1)]
     best_sellers = services.product.get_best_sellers_by_field(db=db)
+    random_products = services.product.get_random_products(db=db, num_products=1)
+    
+    letters = [chr(i) for i in range(ord('A'), ord('Z') + 1)]
     
     context = {
         "request": request,
         "categories": category_responses,
         "letters": letters,
-        "best_sellers": best_sellers
+        "best_sellers": best_sellers,
+        "random_products": random_products
     }
 
     return templates.TemplateResponse("index.html", context)
