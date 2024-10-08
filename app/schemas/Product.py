@@ -33,7 +33,9 @@ class ProductResponse(ProductBase):
 
 
 class ProductLiteResponse(BaseModel):
-    name: str
+    id: Optional[UUID] = None
+    category_id: Optional[UUID] = None
+    generic_name: str
     image_url: Optional[str] = None
     description: Optional[str] = None
     availability: bool = True
