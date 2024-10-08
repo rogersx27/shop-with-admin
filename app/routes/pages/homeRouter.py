@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, Request
+from fastapi.responses import HTMLResponse
 from sqlalchemy.orm import Session
 from fastapi.templating import Jinja2Templates
 from database import get_db
@@ -8,7 +9,7 @@ templates = Jinja2Templates(directory="templates")
 router = APIRouter(tags=["Pages"])
 
 
-@router.get("/home/")
+@router.get("/home/", response_class=HTMLResponse)
 def get_categories(request: Request, db: Session = Depends(get_db)):
     category_responses = service.get_categories_with_products(db=db)
 
