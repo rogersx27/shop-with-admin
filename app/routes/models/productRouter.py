@@ -33,3 +33,18 @@ def update_product(product_id: str, product: schemas.ProductUpdate, db: Session 
 @router.delete("/products/{product_id}/")
 def delete_product(product_id: str, db: Session = Depends(get_db)):
     return service.delete_product(db=db, product_id=product_id)
+
+
+@router.get("/products/best-sellers/field/", response_model=List[schemas.ProductResponse])
+def get_best_sellers_by_field(db: Session = Depends(get_db)):
+    return service.get_best_sellers_by_field(db=db)
+
+
+@router.get("/products/best-sellers/sales/", response_model=List[schemas.ProductResponse], )
+def get_best_sellers_by_sales(db: Session = Depends(get_db)):
+    return service.get_best_sellers_by_sales(db=db)
+
+
+@router.get("/products/{num_products}/", response_model=List[schemas.ProductResponse])
+def get_some_products(num_products: int = 5, db: Session = Depends(get_db)):
+    return service.get_random_products(db=db, num_products=num_products)

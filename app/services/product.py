@@ -1,3 +1,6 @@
+from random import randint
+import random
+from fastapi import HTTPException
 from sqlalchemy.orm import Session
 import schemas
 import models
@@ -23,3 +26,31 @@ def update_product(db: Session, product_id: str, product_update: schemas.Product
 
 def delete_product(db: Session, product_id: str):
     return delete_instance(db, models.Product, product_id)
+
+
+def get_best_sellers_by_field(db: Session):
+    return db.query(models.Product).filter(models.Product.is_best_seller == True).all()
+
+
+def get_best_sellers_by_sales(db: Session):
+    products = db.query(models.Product).filter(
+        models.Product.order_items != None).all()
+
+    products.sort(key=lambda x: len(x.order_items), reverse=True)
+
+    if len(products) == 0:
+        raise HTTPException(status_code=404, detail="No best sellers found")
+
+    return products[:5]
+
+
+def get_random_products(db: Session, num_products: int):
+    all_products = get_products(db)
+
+    if len(all_products) < num_products:
+        raise HTTPException(
+            status_code=404, detail="Not enough products to show")
+
+    five_products = random.sample(all_products, num_products)
+
+    return five_products
