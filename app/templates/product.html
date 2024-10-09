@@ -149,10 +149,10 @@
             <div class="view">
               <img class="" src="{{ url_for('static', path=product.image_url)}}" alt="Levitra" />
 
-              <img style="cursor: pointer;" src="images/levitra.jpg" onclick="popItUp('/imgs/pills/blisters/levitra.jpg','',520,520);return false;" alt="">
+              <img style="cursor: pointer;" src="{{ url_for('static', path=product.image_url)}}" onclick="popItUp('/static/{{ product.image_url }}','',520,520);return false;" alt="">
                 
               <img
-                onclick="popItUp('/imgs/pills/blisters/levitra.jpg','',520,520);return false;"
+                onclick="popItUp('/static/{{ product.image_url }}','',520,520);return false;"
                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAABFUlEQVR4nO2WzWrCUBCFv0031b5BXbtQaArS1IV7pU/XnwdwaxF8p8YuhFbUla5uGTiBIvYmlEmK1QMHwszc+bjJ5HLhrFPUAzAHgpMzYFQGnDlCc7+VAYeKfHzgLfAIpEBDtudnYFcVeA7cRNYkJQayUId2mkNbwBTYyDOgrdxtwc4Ltb/AXm8O/TyQXypnevEE3yk+jTR9Vc29J7ip+CbSdK2aq7rBK9U0PMGp4rNI04lqUk/wk+JtDdJ+/gO4Vs3Y+3dKlGtpkNby5Bv0Aniv4gBJImsMauoAC09w0OFgx2NfA3epbzrWTg1q6v4A/zW4yAtBTb06wUFwgw7qBgfv4Qp1gLO/uvqMnOEGHZYBn/W/9AW9cpannv3/6QAAAABJRU5ErkJggg=="
                 style="cursor: pointer;">
 
@@ -233,7 +233,7 @@
                 <td class="per_pill">
                   <div class="td-inner">
                     <sup>&#36;</sup>&nbsp;{{ (product_with_detail.price | float / product_with_detail.quantity_per_pack | int) | round(2) }}
-                </td>
+                </td>                
                 <td class="order">
                   <div class="td-inner">
                     <a href="cart.php?add=78190"><button class="btn btn-rdd btn-inverse">
@@ -243,19 +243,45 @@
                   </div>
                 </td>
               </tr>
-              <tr class="bonus-dev hidden-md">
-                <td colspan="3">
-                  <ul class="stars ">
+              {% for presentation in product_with_detail.other_presentations %}
+              <tr>
+                <td class="package">
+                  <div class="td-inner">
+                    {{ presentation.quantity }} tablets
+                    <div class="hidden-md">ahorro &#36;&nbsp;530.15</div>
+                  </div>
+                  <ul class="stars hidden-mob">
+
                     <li class="icon icon-plus-circle">
-                      <span><span class="pills">Viagra 100mg x 20 pills FREE bonus!</span></span>
+                      <span><span class="pills">{{ product.generic_name }} {{ product_with_detail.strength  }} x 20 pills FREE bonus!</span></span>
                     </li>
 
                     <li class="icon icon-plus-circle">
                       <span><i></i><span class="shipping">Free AirMail shipping</span></span>
                     </li>
+
                   </ul>
                 </td>
+
+                <td class="price">
+                  <div class="td-inner">
+                    <sup>&#36;</sup>&nbsp;{{ presentation.price }} 
+                  </div>
+                </td>
+                <td class="per_pill">
+                  <div class="td-inner">
+                    <sup>&#36;</sup>&nbsp;{{ (presentation.price | float / presentation.quantity | int) | round(2) }}
+                </td>                
+                <td class="order">
+                  <div class="td-inner">
+                    <a href="cart.php?add=78190"><button class="btn btn-rdd btn-inverse">
+                        <span class="icon icon-cart-green-small"></span>
+                        <span class="hidden-mob">Añadir a la cesta</span>
+                      </button></a>
+                  </div>
+                </td>
               </tr>
+              {% endfor %}
             </tbody>
           </table>
           {% endfor %}
@@ -263,124 +289,8 @@
           <!-- tbl_products END -->
 
           <article>
-            <h1>Pastillas de Vardenafilo</h1>
-            <h2>¿Qué es este medicamento?</h2>
-            <p>El VARDENAFILO se utiliza para tratar los problemas de erección en hombres. El vardenafilo funciona más
-              rápido que el Sildenafil (Viagra®) y tiene menos probabilidades de tener efectos secundarios en la vista.
-            </p>
-            <h2>¿Qué le debería decir a mi médico antes de utilizar esta medicación?</h2>
-            <p>Necesita saber si usted tiene cualquiera de estas enfermedades:</p>
-            <ul class="list-style">
-              <li>deformidad anatómica del pene, enfermedad de Peyronie, o si alguna vez ha tenido una erección que
-                durara más de 4 horas</li>
-              <li>problemas de coagulación</li>
-              <li>cáncer</li>
-              <li>diabetes</li>
-              <li>acidez estomacal recurrente o enfermedad de reflujo gastroesofágico (ERGE)</li>
-              <li>enfermedades cardiacas, angina de pecho, presión arterial alta o baja, antecedentes de ataques al
-                corazón, u otros problemas cardiacos</li>
-              <li>colesterol alto</li>
-              <li>infección por VIH</li>
-              <li>enfermedad renal</li>
-              <li>enfermedad hepática</li>
-              <li>anemia falciforme</li>
-              <li>derrame cerebral</li>
-              <li>úlceras estomacales o intestinales</li>
-              <li>problemas oculares o de la visión</li>
-              <li>una reacción inusual al vardenafilo, a otros medicamentos, a alimentos, a colorantes, o a conservantes
-              </li>
-              <li>sí está embarazada o está tratando de quedarse</li>
-              <li>sí está dando el pecho</li>
-            </ul>
-            <h2>¿Cómo se debe de usar este medicamento?</h2>
-            <p>Tome las pastillas de vardenafilo por vía oral con o sin comida. La dosis se toma normalmente 1 hora
-              antes de la actividad sexual. Trague las pastillas con un poco de agua. No tome una dosis doble o extra.
-              Hable con su pediatra o profesional sanitario sobre la utilización de este medicamento en niños. Se
-              podrían necesitar cuidados especiales. En estos momentos, este medicamento no se utiliza en niños.</p>
-            <h2>¿Qué pasa si me olvido una dosis?</h2>
-            <p>Esto no se aplica. Sin embargo, no tome una dosis doble o extra.</p>
-            <h2>¿Qué puede interactuar con este medicamento?</h2>
-            <p>No tome el vardenafilo sí usted está tomando los siguientes medicamentos:</p>
-            <ul class="list-style">
-              <li>medicamentos de nitroglicerina para el corazón o el dolor en el pecho como el nitrito de amilo,
-                dinitrato de isosorbida, mononitrato de isosorbida, nitroglicerina, incluso sí los tema ocasionalmente
-                Esto incluye algunas drogas ilícitas llamadas ‘poppers’ que también contienen nitrato de amilo y nitrato
-                de butilo</li>
-            </ul>
-            <p>El vardenafilo también puede interactuar con los siguientes medicamentos:</p>
-            <ul class="list-style">
-              <li>bloqueadores alfa como la alfuzosina (UroXatral®), la doxazosina (Cardura®), la prazosina
-                (Minipress®), la tamsulosina (Flomax®), o la terazosina (Hytrin®), que se utilizan para tratar la
-                presión arterial alta o la próstata agrandada</li>
-              <li>trióxido de arsénico</li>
-              <li>bosentan</li>
-              <li>ciertos antibióticos como la claritromicina, la eritromicina, la sparfloxacina, la troleandomicina
-              </li>
-              <li>ciertos anticonvulsivos como la carbamazepina, la fenitoína, y el fenobarbital</li>
-              <li>ciertos medicamentos para el tratamiento de la infección por VIH o del SIDA</li>
-              <li>ciertos medicamentos para tratar las arritmias (por ejemplo, amiodarona, disopiramida, dofetilida,
-                flecainida, ibutilida, quinidina, procainamida, propafenona, sotalol)</li>
-              <li>cloroquina</li>
-              <li>cisaprida</li>
-              <li>diltiazem</li>
-              <li>zumo de toronja (pomelo)</li>
-              <li>medicamentos antifúngicos (el fluconazol, el itraconazol, el ketoconazol, el voriconazol)</li>
-              <li>metadona</li>
-              <li>nicardipino</li>
-              <li>pentamidina</li>
-              <li>pimozida</li>
-              <li>rifabutina, rifampina o rifapentina</li>
-              <li>algunos medicamentos para la depresión y los problemas de humor (amoxapina, maprotilina, fluoxetina,
-                fluvoxamina, nefazodona, pimozida, fenotiazinas, antidepresivos tetracícliclos)</li>
-              <li>verapamilo</li>
-            </ul>
-            <p>Dígale a su médico o profesional sanitario todos los otros medicamentos que está tomando, incluyendo
-              medicamentos sin receta, suplementos nutricionales, o productos herbolarios. También informe a su médico o
-              profesional sanitario si consume frecuentemente bebidas con cafeína o alcohol, si fuma, o si consume
-              drogas ilegales. Esto puede afectar la manera en que su medicamento funciona. Antes de dejar o comenzar
-              cualquiera de sus medicamentos consulte con su médico.</p>
-            <h2>¿Qué debo de tener en cuenta mientras tomo este medicamento?</h2>
-            <p>Sí nota cambios en su vista mientras esté tomando este medicamento, llame a su médico tan pronto como le
-              sea posible. Deje inmediatamente de usar el vardenafilo sí pierde la vista en un ojo o en ambos. Póngase
-              inmediatamente en contacto con su médico. Llame inmediatamente a su médico sí la erección dura más de 4
-              horas o se vuelve dolorosa. Esto puede ser una señal de priapismo y debe de ser tratado inmediatamente
-              para prevenir un daño permanente. Sí experimenta síntomas de nausea, mareos, dolor en el pecho o en el
-              brazo al empezar la actividad sexual después de haber tomado el vardenafilo, usted debería abstenerse de
-              continuar la actividad y ponerse en contacto con su médico inmediatamente. No cambie la dosis de su
-              medicamento. Por favor llame a su médico para determinar si su dosis necesita ser revisada. El uso del
-              vardenafilo no lo protege a usted o a su compañero/compañera de la infección por VIH (el virus que causa
-              el SIDA) u otras enfermedades de transmisión sexual.</p>
-            <h2>¿Qué efectos secundarios puede causar este medicamento?</h2>
-            <p>Avise a su médico o profesional de la salud lo antes posible sí observa alguno de estos efectos
-              secundarios:</p>
-            <ul class="list-style">
-              <li>dolor de espalda</li>
-              <li>cambios en la audición como pérdida de audición o zumbido en los oídos</li>
-              <li>cambios en la visión como pérdida de la misma, visión borrosa, ser más sensible a la luz, o problemas
-                para diferenciar los objetos azules de los verdes o los objetos tienen un tono azulado</li>
-              <li>dolor de pecho o palpitaciones</li>
-              <li>respiración entrecortada o dificultad para respirar</li>
-              <li>mareos</li>
-              <li>inflamación ocular</li>
-              <li>dolores musculares</li>
-              <li>erección prolongada (de más de 4 horas)</li>
-              <li>erupciones en la piel, picazón</li>
-              <li>convulsiones</li>
-            </ul>
-            <p>Estos son los efectos secundarios que normalmente no requieren atención médica (infórmele a su médico o
-              profesional de la salud si continúan o son molestos):</p>
-            <ul class="list-style">
-              <li>rubor (bochorno)</li>
-              <li>dolor de cabeza</li>
-              <li>indigestión</li>
-              <li>náusea</li>
-              <li>congestión nasal</li>
-            </ul>
-            <p>Es posible que en este listado no estén todos los efectos secundarios.</p>
-            <h2>¿Dónde puedo guardar mi medicación?</h2>
-            <p>Mantenga este medicamento fuera del alcance de los niños en un recipiente que los niños pequeños no
-              puedan abrir. Consérvelo a temperatura ambiente entre 15º y 30º grados C (59º y 86º grados F). Tire a la
-              basura cualquier medicamento sin usar pasada la fecha de caducidad.</p>
+            <h1>Pastillas de {{ product.generic_name }}</h1>
+            {{ product.large_description | safe }}
           </article>
           <!-- page-product END -->
 
@@ -508,23 +418,10 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 
-    <script src="/js/js.js"></script>
-    <script src="/js/script_ajax.js?t=1728355675"></script>
+    <script src="{{ url_for('static', path='js/js.js') }}"></script>
   </div>
   <!-- Put your GoogleAnalytics (google.com/analytics) code here -->
 
-
-
-  <script src="/js/selectAutocomplete.js"></script><img src="/update.php" width="0" height="0">
-
-  <script src="js/search_list.js"></script>
-  <script> window._option = ["A_RET", "ABANA", "ABILIFY", "ABIRATERONE", "ACECLOFENAC", "ACEON", "ACETYL_L_CARNITINE", "ACIPHEX", "ACOFIDE", "ACTICIN", "ACTIGALL", "ACTIVE FRESH GEL", "ACTIVE PACK", "ACTONEL", "ACTOPLUS MET", "ACTOS", "ACULAR", "ACZONE", "ADALAT", "ADALAT CC", "ADCIRCA", "ADDYI", "ADVAIR DISKUS", "ADVAIR ROTAHALER", "ADVENT DT", "ADVIL DUAL ACTION", "AFINITOR", "AFRIN", "AGEFINE FORTE", "AGGRENOX", "ALBENZA", "ALDACTONE", "ALDARA", "ALESSE", "ALFALFA", "ALKERAN", "ALLEGRA", "ALLERMYL", "ALLI", "ALMOND AND ROSE SOAP", "ALOE VEGIE", "ALPHAGAN", "ALTACE", "AMALAKI", "AMARYL", "AMOXIL", "ANAFRANIL", "ANAFRANIL SR", "ANDROGEL", "ANDROXAL", "ANSAID", "ANTABUSE", "ANTI HAIR FALL CREAM", "ANTI HAIR FALL HAIR OIL", "ANTI HAIR FALL SHAMPOO", "ANTI_DANDRUFF HAIR CREAM", "ANTI_DANDRUFF HAIR OIL", "ANTI_DANDRUFF SHAMPOO", "ANTI_WRINKLE CREAM", "ANTIVERT", "APCALIS ORAL JELLY", "APIXABAN", "ARAVA", "ARCOXIA", "ARICEPT", "ARIMIDEX", "ARISTOCORT", "ARJUNA", "ARJUNA VEGIE", "AROMASIN", "ARSOHILLS", "ARTANE", "ARTROHILLS", "ASACOL", "ASHOXY 1000", "ASHOXY", "ASHULPHA", "ASHVAGANDHA", "ASTELIN", "ATACAND", "ATARAX", "AUBAGIO", "AUGMENTIN", "AUROGRA", "AVALIDE", "AVANA", "AVELOX", "AVENTYL", "AVODART", "AYGESTIN", "AYURSLIM", "AZELEX", "AZILECT", "AZOPT", "AZOR", "AZULFIDINE", "BACTRIM", "BACTROBAN", "BAEL", "BANANA CONDOMS", "BARACLUDE", "BARLEY GRASS", "BAYROCIN", "BEAPHAR PUPPY TRAINER", "BEAPHAR SALMON OIL", "BEAPHAR TOOTHPASTE", "BECLATE", "BENICAR", "BENICAR HCT", "BENZAC", "BENZOYL", "BEPREVE", "BESIVANCE", "BETADINE", "BETAPACE", "BETOPTIC", "BIAXIN", "BILTRICIDE", "BIMATOPROST", "BITTER MELON VEGIE", "BLACK GRAPES CONDOMS", "BLEMINOR ANTI BLEMISH CREAM", "BONNISAN", "BONNISPAZ", "BOOSTWIN", "BOSWELLIA VEGIE", "BOWELCARE", "BRAHMI", "BRAHMIHILLS VEGIE", "BRESOL SYRUP", "BRILINTA", "BRAND BRILINTA", "BRO_ZEDEX SYRUP", "BROMHEXINE", "BUDECORT", "BUSCOPAN", "BUSPAR", "BUTTERSCOTCH CONDOMS", "BYSTOLIC", "CALAN", "CALAN SR", "CALCIBROOK FORTE", "CALCIHILLS 500", "CALMHILLS", "CAMPRAL", "CANASA", "CANITONE", "CARDIO STRENGTH", "CARODYL", "CARTAIL", "CARTIA", "CARTIA XT", "CASODEX", "CATAPRES", "CAVERTA", "CECLOR CD", "CEFTIN", "CELEBREX", "CELEXA", "CELL_PET ENHANCED", "CELL_PET IMMUNE BOOSTER", "CELL_PET JUNIOR", "CELLCEPT", "CELOL", "CENFORCE FM", "CENFORCE PROFESSIONAL", "CENFORCE SOFT", "CENFORCE_D", "CENFORCE", "CHAMPIX", "CHEERIO FLUORIDE", "CHLORHEXIDINE", "CHLOROMYCETIN", "CHLOROQUINE", "CHOCOLATE CONDOMS", "CIALIS", "CIALIS BLACK", "CIALIS DAILY", "CIALIS ORAL JELLY", "CIALIS PACK", "CIALIS PROFESSIONAL", "CIALIS SOFT", "CIALIS STRIPS", "CIALIS SUBLINGUAL", "CIALIS SUPER ACTIVE", "CIALIS SUPER FORCE", "BRAND CIALIS", "CILOXAN", "CIPRO", "CIPRODEX", "CLARINA ANTI_ACNE FACE CREAM", "CLARINA ANTI_ACNE FACE MASK", "CLARINA ANTI_ACNE FACE WASH GEL", "CLARINA ANTI_ACNE KIT", "CLARINEX", "CLARITIN", "CLASSIC PACK", "CLEAR COMPLEXION WHITENING FACE WASH", "CLENBUTEROL", "CLINDAGEL", "CLINDAPET", "CLOMID", "CLOPIDOGREL", "CLOZARIL", "COFFEE CONDOMS", "COLCRYS", "COLOFAC", "COMBIGAN", "COMBIVIR", "COMPAZINE", "COMPLETE CARE TOOTHPASTE", "CONFIDO", "CONTRACTUBEX", "BRAND CONTRACTUBEX", "CONTRAVE", "CORDARONE", "CORECTIN", "COREG", "CORTAID", "COSMELITE", "COSOPT", "COUMADIN", "COVID_19 EXPRESS TEST", "COZAAR", "CREON", "CRESTOR", "CUCUMBER AND COCONUT SOAP", "CUTIVATE", "CYCLOGYL", "CYCLOPAM", "CYCRIN", "CYKLOKAPRON", "CYMBALTA", "CYTOMEL", "CYTOTEC", "CYTOXAN", "DAKLINZA", "DALIRESP", "DANOCRINE", "DARUNAVIR", "DDAVP", "DEEP CLEANSING APRICOT FACE WASH", "DEKARSINOHILLS", "DELETIK", "DEMADEX", "DEPAKENE", "DEPAKOTE", "DERMA STRENGTH", "DERMOTIC", "DESOGEN", "DESONATE", "DESYREL", "DETOXILHILLS", "DETROL", "DETROL LA", "DEXILANT", "DEXONE", "DIABECON", "DIABECON DS", "DIABOHILLS", "DIACEREIN", "DIAKOF", "DIAMOX", "DIANE_35", "DIARROPET", "DICARIS", "DICARIS CHILDREN", "DICLEGIS", "DIFFERIN", "DIFLUCAN", "DIGESHILLS", "DILANTIN", "DIOVAN", "DIOVAN HCT", "DIPROLENE", "DOSTINEX", "DOSULEPIN", "DOXYHEAL", "DRAMAMINE", "DRONTAL PUPPY", "DROXIA", "DULCOLAX", "DULERA", "DURICEF", "DYDROGESTERONE", "DYMISTA", "EDARBI", "EDARBYCLOR", "EFAVIRENZ", "EFAVIRENZ_EMTRICITABINE_TENOFOVIR", "EFFEXOR XR", "EFFIENT", "EFUDEX", "ELAVIL", "ELDEPRYL", "ELIDEL", "ELMIRON", "ELOCON", "EMFLAZA", "EMLA", "ENABLEX", "ENDOBLOC T KIT", "ENTOCORT EC", "ENTRESTO", "EPIVIR", "EPSOLAY", "ESBRIET", "ESTRACE", "ESTRIOL TOPICAL", "EULEXIN", "EURAX", "EVECARE", "EVISTA", "EXCEL CAPSULES", "EXELON", "EXFORGE", "EXTICK SOAP", "EXTRA SUPER AVANA", "EXTRA SUPER P FORCE", "FABISPRAY", "FAIRNESS KESAR FACE WASH", "FAMILY PACK", "FAMVIR", "FARXIGA", "BRAND FARXIGA", "FASIGYN", "FELDENE", "FEMALE CIALIS", "FEMALE VIAGRA", "FEMARA", "FEMILON", "FEMOHILLS", "FENUGREEK VEGIE", "FERROGEN XT", "FILDENA", "FILDENA CT", "FILDENA EXTRA POWER", "FILDENA PROFESSIONAL", "FILDENA STRONG", "FILDENA SUPER ACTIVE", "FILDENA XXX", "FILITRA", "FILITRA PROFESSIONAL", "FIPROFORT PLUS CATS AND KITTENS", "FIPROFORT PLUS DOG", "FIPROFORT", "FLAGYL", "FLAREX", "FLEQSUVY", "FLEXERIL", "FLEXIBILITY", "FLICKOUT SOAP", "FLOMAX", "FLONASE", "FLORINEF", "FLOXIN", "FLUOXETINE", "FORTICAL", "FORZEST", "FOSAMAX", "FREEDOM SPRAY", "FRESHCOAT", "FRUMIL", "FULCOAT", "FURADANTIN", "FURGLOW ORAL COAT CONDITIONER", "FURGLOW SKIN AND COAT TONIC", "FURNIL", "FUSIDERM B", "GALANTAMINE", "GALVUMET", "GALVUS", "GARCINIA CAMBOGIA", "GARCINIA VEGIE", "GAUTYHILLS", "GENTLE EXFOLIATING APRICOT SCRUB", "GENTLE EXFOLIATING WALNUT SCRUB", "GEODON", "GERIFORTE", "GERIFORTE SYRUP", "GINGER VEGIE", "GLEEVEC", "GLOHILLS", "GLOSSY COAT", "GLUCOTROL", "GLUCOTROL XL", "GLUCOVANCE", "GLYCOFLEX", "GLYXAMBI", "GOKSHURA", "GREEN APPLE CONDOMS", "GRIFULVIN", "GUDUCHI", "GUGGUHILLS", "GUTRON", "GUTWELL", "GYNE_LOTRIMIN", "HADJOD", "HALOPERIDOL", "HARIDRA", "HARITAKI VEGIE", "HARVONI", "HEMELIV", "HEMOHILLS", "HEPAMUST", "HEPCINAT", "HEPCINAT LP", "HERBAL ANTIBIOTIC", "HEXIMAR OINTMENT", "HIFORCE DELAY", "HIMCAL PET SUSPENSION", "HIMCOLIN GEL", "HIMPLASIA", "HIMPYRIN", "HIOWNA_JR CHOCOLATE", "HIOWNA_JR VANILLA", "HOLY BASIL VEGIE", "HONEY AND CREAM SOAP", "HYDRALAZINE", "HYDROQUINONE TOPICAL", "HYDROXYCHLOROQUINE", "HYGROTON", "HYTRIN", "HYZAAR", "IBRUTINIB", "ILAXTEN", "ILOSONE", "IMDUR", "IMITREX", "IMMUNITY", "IMMUNOL", "IMMUNOPLUS", "IMODIUM", "IMUNOHILLS", "IMURAN", "INDERAL", "INDERAL LA", "INDOCIN", "INDOCIN SR", "INFLAMIN VET CREAM", "INHANCER", "INSPRA", "INTENSIVE FACE MOISTURIZING LOTION", "INVOKANA", "IOPAINT", "IRBESARTAN", "ISENTRESS", "ISOFAIR", "ISORDIL", "ISORDIL SUBLINGUAL", "ISOTROIN", "ITRACONAZOLE", "JALYN", "JAMBUHILLS VEGIE", "JANUMET", "JANUVIA", "JARDIANCE", "JASMINE CONDOMS", "JENTADUETO", "JENTADUETO XR", "JESIBI", "JESIBI CREAM", "KALETRA", "KAMAGRA GOLD", "KAMAGRA POLO", "KAMAGRA", "KAMAGRA EFFERVESCENT", "KAMAGRA ORAL JELLY", "KAMAGRA SOFT", "KAPIKACHHU", "KARELA", "KEFLEX", "KEMADRIN", "KEPPRA", "KESHOHILLS", "KETO GUARD", "KETOCHLOR", "KISKIN", "KISQALI", "KIWOF FOR CATS", "KIWOF PLUS FOR DOGS", "KOFHILLS", "KOFLET SYRUP", "KOMBIGLYZE XR", "BRAND KOMBIGLYZE XR", "LAMICTAL", "LAMICTAL DISPERSIBLE", "LAMISIL", "LAMISIL CREAM", "LANOXIN", "LARIAM", "LASIX", "LASUNA", "LATUDA", "LENALIDOMIDE", "LESCOL XL", "LETAIRIS", "LEUKERAN", "LEVITRA", "LEVITRA ORAL JELLY", "LEVITRA PROFESSIONAL", "LEVITRA SOFT", "LEVITRA SUPER FORCE", "BRAND LEVITRA", "LEVOFLOXACIN", "LEXAPRO", "LIGHT PACK", "LINCOCIN", "LIONS MANE MUSHROOM POWDER", "LIORESAL", "LIPID CARE", "LIPITOR", "LITHOBID", "LIV 52 DROP", "LIV 52 DS", "LIV 52 HB", "LIV 52", "LIV FIRST", "LIV.52", "LIVALO", "LIVOFEROL PET", "LKC", "LODINE", "LOMEXIN", "LONITEN", "LOPID", "LOPRESSOR", "LOTEMAX", "LOTRISONE", "LOXITANE", "LOZOL", "LOZOL SR", "LUKOL", "LUVOX", "LUZU", "MANJISHTHA", "MAXALT", "MEBENDAZOLE", "MEDEXIL", "MEDROL ACTIVE", "MEGAFLEX", "MELATONIN", "MELLARIL", "MELONEX ORAL", "MELOXICAM ORAL SUSPENSION", "MENOSAN", "MENTAT SYRUP", "MENTAX", "MERALAC", "MESHASHRINGI", "MESTINON", "METAGLIP", "METFORMIN", "METFORMIN XR", "METHIPOWER", "MICARDIS", "MICARDIS HCT", "MICATIN", "MICODIN SHAMPOO", "MICOGEL", "MICRONASE", "MICROZIDE", "MIGRAHILLS", "MINESSE", "MINIPRESS", "MINOCIN", "MIRALAX", "MIRAPEX", "MOBIC", "MOLNUPIRAVIR", "MONSTER PACK", "MONUROL", "MORINGA POWDER", "MORINGA", "MORINGA CAPSULE", "MORR F", "MOTEGRITY", "MOTILIUM", "MOTRIN", "MUCOPAIN", "MUSLIHILLS VEGIE", "MYAMBUTOL", "MYDRIACYL", "MYHEP", "MYRBETRIQ", "MYSOLINE", "NAILROX NAIL LACQUER", "NAMENDA", "NAMZARIC", "NAPROSYN", "NATDAC", "NATURAL INTENSIVE LIP BALM", "NEEM", "NEEM VEGIE", "NEGASUNT", "NEOMERCAZOLE", "NEORAL", "NESINA", "NEURONTIN", "NEXAVAR", "NEXIUM", "NEXLETOL", "NIMOTOP", "NITROSTAT", "NIZORAL", "NIZORAL CREAM", "NIZORAL SHAMPOO", "NOCDURNA", "NOLVADEX", "NOOTROPIL", "NORLUTATE", "NOROXIN", "NORVASC", "NOURISHING BODY LOTION", "NOURISHING SKIN CREAM", "NOVELON", "NUFORCE SHAMPOO", "NUTRICOAT ADVANCE", "NUTRICOAT", "OCUFLOX", "OCUHILLS", "OFEV", "OIL CLEAR LEMON FACE WASH", "OIL CONTROL LEMON FOAMING FACE WASH", "OMEGAPLUS", "OMNICEF", "ONE_ALPHA", "ONGLYZA", "OPSUMIT", "OPTHOCARE M", "OPTHOCARE XT", "OPTHOCARE", "ORAHELP", "ORAP", "ORAPRED", "ORAPRED DISPERSIBLE", "ORAPRED ORAL DROPS", "ORNIDAZOLE", "OVOL", "OXSORALEN", "OXYTROL", "P FORCE", "PAMELOR", "PARLODEL", "PASITREX OINTMENT", "PATANOL", "PAXIL", "PAXIL CR", "PENEGRA", "PENISOLE", "PENON", "PENTASA", "PEPCID", "PERIACTIN", "PETHEX", "PETJOINT", "PETSTAR SHAMPOO", "PHENERGAN", "PHENERGAN SYRUP", "PHOSLO", "PILL ORGANIZER", "PILL SPLITTER", "PINEAPPLE CONDOMS", "PINK CONDOMS", "PLACENTREX", "PLAN B ONE_STEP", "PLETAL", "PODOWART", "POMALYST", "POMISOL", "PONSTEL", "POXET", "PRADAXA", "PRANDIN", "PRECOSE", "PRED FORTE", "PRELONE", "PREMARIN", "PREVACID", "PRILIGY", "PRILOSEC", "PRIMAQUINE", "PRINCIPEN", "PRISTIQ", "PROAIR", "PROBALAN", "PROCORALAN", "PROFESSIONAL PACK", "PROGRAF", "PROMETRIUM", "PROPECIA", "PROSCAR", "PROSCAREHILLS", "PROSTATE CARE", "PROTECTIVE SUNSCREEN LOTION", "PROTEIN SHAMPOO GENTLE DAILY CARE", "PROTONIX", "PROTOPIC", "PROVIBOOST DROPS", "PROVIBOOST SYRUP", "PROVICAL", "PULMICORT", "PUNARNAVA", "PUNARNAVA VEGIE", "PURIFYING NEEM FACE WASH", "PURIFYING NEEM PACK", "PURIFYING NEEM SCRUB", "PYRIDIUM", "QUESTRAN", "QVAR", "RANEXA", "RASHFREE", "REBETOL", "RED REISHI MUSHROOM POWDER", "RED VIAGRA", "REEFLEC V", "REFRESHING AND CLARIFYING TONER", "REFRESHING CLEANSING MILK", "REFRESHING FRUIT PACK", "REGLAN", "REMERON", "RENAGEL", "RENAL ESSENTIALS", "RENALKA SYRUP", "RENOVA", "REOSTO", "REQUIP", "RESTASIS", "BRAND RESTASIS", "REVATIO", "REVIA", "REVITALIZING NIGHT CREAM", "RHEUMATREX", "RHINOCORT", "RIDD", "RIFADIN", "RISPERIDONE", "ROBAXIN", "ROCALTROL", "ROGAINE", "ROSZET", "RULIDE", "RYBELSUS", "SAFEHEART", "SALICYLIC ACID", "SAMSCA", "SANCTURA XR", "SAVELLA", "SCAREND SILICONE", "SENNA VEGIE", "SENSITIVE TOOTHPASTE", "SEPTILIN DROP", "SERC", "SEROMYCIN", "SEROQUEL", "SETGUT EXOTIC", "SHALLAKI", "SHANKHPUSHPI VEGIE", "SHATAVARI", "SHATAVARI VEGIE", "SHIGRU", "SHILA X", "SHILAJITHILLS", "SHUDDHA GUGGULU", "SIBELIUM", "SILAGRA", "SILDALIS", "SILDAMAX", "SILDIGRA SOFTGEL", "SILVITRA", "SINEMET", "SINEMET CR", "SINEQUAN", "SINGULAIR", "SKELAXIN", "SMRUTIHILLS", "SOFOVIR", "SOFT PACK", "SOFTAS MAX SOAP", "SOLOSEC", "SORIATANE", "SPARKLING WHITE TOOTHPASTE", "SPEMAN", "SPIRIVA", "SPIRULINA", "SPRYCEL", "STALEVO", "STARLIX", "STENDRA", "STENDRA SUPER FORCE", "STONHILLS", "STRATTERA", "STRAWBERRY CONDOMS", "STRAWBERRY SHINE LIP BALM", "STROMECTOL", "STRONG PACK", "STUGERON", "STYPLON", "SUGAR_BALANCE", "SUHAGRA", "SULFACURE", "SUMYCIN", "SUNTHI", "SUPER AVANA", "SUPER GREENHILLS", "SUPER KAMAGRA", "SUPER P FORCE JELLY", "SUPER P FORCE", "SUPER TADAPOX", "SUPER VEGIEHILLS", "SUPER VIDALISTA", "SUPER ZHEWITRA", "SUPRAX", "SYMBICORT", "SYMMETREL", "SYNALAR", "SYNTHROID", "TADACIP", "TADAGRA SOFTGEL", "TADALISTA", "TADALISTA CT", "TADALISTA PROFESSIONAL", "TADALISTA SUPER ACTIVE", "TADALIS SX", "TADAPOX", "TADARISE", "TADASIVA", "TADORA", "TAGARA", "TAKTIC", "TALEKT SYRUP", "TAMBOCOR", "TAMIFLU", "TAPAZOLE", "TARCEVA", "TASIGNA", "TAZORAC", "TECFIDERA", "TEGRETOL", "TEMOVATE", "TENOFOVIR_DISOPROXIL_FUMARATE", "TENOFOVIR_EMTRICITABINE", "TENORETIC", "TENORMIN", "TENOVATE", "TENTEX FORTE", "TENTEX ROYAL", "TESSALON", "THALIX", "THEOFER XT", "THEOX CR", "THORAZINE", "TIBOFEM", "TICLID", "TIMOPTIC", "TIVICAY", "TOBRADEX", "TOBREX", "TOFRANIL", "TOP AVANA", "TOPAMAX", "TOPROL XL", "TORADOL", "TRADJENTA", "TRANDATE", "TRAVATAN", "TRECATOR_SC", "TRETIVA", "TRIBENZOR", "TRIBULUS VEGIE", "TRICOR", "TRIKATU", "TRILEPTAL", "TRIMOHILLS", "TRINTELLIX", "TRIPHALA", "TRIPHALA POWDER", "TRIPHALA SYRUP", "TRIPHALAHILLS", "TRIPLE TRIAL PACK", "TRIUMEQ", "TRUSOPT", "TULASI", "TULASI SYRUP", "TURMERIC FORMULA", "TURMERIC VEGIE", "TYLENOL", "ULORIC", "ULTRAVATE", "UNDER EYE CREAM", "URECHOLINE", "URISPAS", "UROXATRAL", "V_GEL", "VALIF", "VALPROATE", "VALTREX", "VANIQA", "VANTIN", "VASAKA", "VASERETIC", "VASOTEC", "VASTAREL", "VEGA EXTRA COBRA", "VELCOTE", "VELPANAT", "VENTOLIN", "VENTOLIN INHALER", "VESICARE", "VETBACIN", "VETMEDIN", "VFEND", "VIAGRA", "VIAGRA BLACK", "VIAGRA CAPSULES", "VIAGRA ORAL JELLY", "VIAGRA PACK", "VIAGRA PROFESSIONAL", "VIAGRA SOFT", "VIAGRA STRIPS", "VIAGRA SUBLINGUAL", "VIAGRA SUPER ACTIVE", "VIAGRA SUPER DULOX_FORCE", "VIAGRA SUPER FLUOX_FORCE", "VIAGRA SUPER FORCE", "BRAND VIAGRA", "VIBRAMYCIN", "VIDALISTA", "VIDEX EC", "VIGORA", "VIIBRYD", "VILITRA", "VIMERAL", "VINPOCETINE", "VIRAMUNE", "VIROPIL", "VITALITY", "VITAMIN C", "VITOMANHILLS", "VOLTAREN", "VOLTAREN GEL", "VOLTAREN XR", "VPXL", "VRIKSHALMA", "WELLBUTRIN SR", "WHEATGRASS", "WORMTRAP", "WWB", "WYNZORA", "XALACOM", "BRAND XALACOM", "XALATAN", "XARELTO", "XELODA", "XENICAL", "XIFAXAN", "XTANDI", "XYLOCAINE", "XYZAL", "YASHTIMADHU", "YASMIN", "ZANAFLEX", "ZANTAC", "ZEBETA", "ZENEGRA", "ZEROKRIM PLUS", "ZESTORETIC", "ZESTRIL", "ZETIA", "ZIAC", "ZIAGEN", "ZINCOHEAL", "ZINCONIA", "ZITHROMAX", "ZITHROMAX DISPERSIBLE", "ZOCOR", "ZOFRAN", "ZOLOFT", "ZOMIG", "ZOVIRAX", "ZOVIRAX OPHTALMIC", "ZYDENA", "ZYLOPRIM", "ZYPREXA", "ZYRTEC", "ZYVOX"]; window._url = "buy-%s-co.html";</script>
-  <script type="text/javascript">
-    // <![CDATA[
-    document.cookie = "click=YWZmaWxpYXRlPTIxNDI1XzkwMDQmaXA9MTgxLjEzNS4xMTEuMTQmc2l0ZV9pZD04MDUxJmtleXdvcmRzPSZjdXN0b209JnJlZmVycmVyPU5PX1JFRkVSUkVSJTVCRU5UUlklM0RjYW5hZGlhbi1yeC1tZWRzLmNvbSUyRiU1RCZ1YWdlbnQ9TW96aWxsYSUyRjUuMCslMjhXaW5kb3dzK05UKzEwLjAlM0IrV2luNjQlM0IreDY0JTI5K0FwcGxlV2ViS2l0JTJGNTM3LjM2KyUyOEtIVE1MJTJDK2xpa2UrR2Vja28lMjkrQ2hyb21lJTJGMTI5LjAuMC4wK1NhZmFyaSUyRjUzNy4zNiZxdWVyeT0mc2lkPWc2MGxzOTI5OTVra2o3dmoxbTEzMGc0MnFwJmhvc3Q9Y2FuYWRpYW4tcngtbWVkcy5jb20mdG1wbD0yMjgmaXRlbT1sZXZpdHJh;path=/";
-    document.write('<img src="/click.php?817170521" border="0" width="1" height="1">');
-    // ]]>
-  </script>
 </body>
 
 </html>

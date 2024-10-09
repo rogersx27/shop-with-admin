@@ -81,9 +81,5 @@ def get_product(request: Request, product_id: str, db: Session = Depends(get_db)
         "brands": brands,
         "manufacturers": manufacturers,
     }
-    
-    for product_detail in products_with_detail:
-        print(product_detail.strength)
-        print(product_detail.supply_type)
 
     return templates.TemplateResponse("product.html", context)

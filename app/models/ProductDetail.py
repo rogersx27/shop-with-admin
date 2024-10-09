@@ -1,4 +1,4 @@
-from sqlalchemy import Column, DateTime, Integer, String, DECIMAL, Boolean, Text, ForeignKey, null
+from sqlalchemy import JSON, Column, DateTime, Integer, String, DECIMAL, Boolean, Text, ForeignKey, null
 from sqlalchemy.orm import relationship
 from database import Base
 import uuid
@@ -18,5 +18,6 @@ class ProductDetail(Base):
     stock = Column(Integer, nullable=False)
     packaging = Column(String(255), nullable=True)
     quantity_per_pack = Column(String(255), nullable=True)
+    other_presentations = Column(JSON, nullable=True)
 
     product = relationship("Product", back_populates="product_details")
