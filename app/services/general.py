@@ -15,7 +15,7 @@ def get_all_instances(db: Session, model):
     return db.query(model).all()
 
 
-def get_instance_by_id(db: Session, model, instance_id: str) -> object:
+def get_instance_by_id(db: Session, model, instance_id: str):
     instance = db.query(model).filter(model.id == instance_id).first()
     if not instance:
         raise HTTPException(status_code=404, detail=f"{model.__name__} not found")

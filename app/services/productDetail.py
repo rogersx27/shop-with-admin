@@ -23,3 +23,7 @@ def update_productDetail(db: Session, productDetail_id: str, productDetail_updat
 
 def delete_productDetail(db: Session, productDetail_id: str):
     return delete_instance(db, models.ProductDetail, productDetail_id)
+
+
+def get_productDetails_by_product_id(db: Session, product_id: str):
+    return db.query(models.ProductDetail).filter(models.ProductDetail.product_id == product_id).all()

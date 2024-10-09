@@ -1,3 +1,4 @@
+from typing import List
 from models import Product
 import schemas
 
@@ -5,6 +6,7 @@ def get_product_info(product: Product):
     return schemas.ProductLiteResponse(
         id = getattr(product, 'id', None),
         category_id=getattr(product, 'category_id', None),
+        category_name=getattr(product.category, 'name', None),
         generic_name=getattr(product, 'generic_name', ""),
         image_url=getattr(product, 'image_url', None),
         description=getattr(product, 'description', None),
@@ -22,5 +24,5 @@ def get_product_info(product: Product):
         ) if product.product_details else None
     )
     
-def get_list_product_info(products):
+def get_list_product_info(products: List[Product]):
     return [get_product_info(product) for product in products]

@@ -24,8 +24,9 @@
          <div class="categories-container">
             <ul class="list-menu no-list">
                {% for category in categories %}
-               <li class="list-menu-item"><a href=""><span>{{ category.name }}</span></a></li>
+               <li class="list-menu-item"><a href="/products/by/category/{{ category.id }}/"><span>{{ category.name }}</span></a></li>
                {% endfor %}
+            </ul>
          </div>
          <div class="site top-line clearfix">
             <a class="btn-menu js-classSwitch" data-dbx-name=".swipe-menu,body,.swipe-overlay">
@@ -156,7 +157,7 @@
                                     <span><span>{{ product.generic_name }}</span></span>
                                  </h3>
                               </div>
-                              <p>{{ product.description }}</p>
+                              <p>{{ product.description | safe }}</p>
                            </div>
                            <span class="more-info hidden-mob">más informai&oacute;n </buy-viagra-co.html>
                         </div>
