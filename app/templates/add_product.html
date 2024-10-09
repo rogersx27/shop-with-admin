@@ -3,24 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Añadir Producto</title>
+    <title>Add Product, Category, and Details</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
             margin: 0;
             padding: 20px;
+            background-color: #f4f4f4;
         }
 
         h1 {
             text-align: center;
             color: #333;
+            margin-bottom: 40px;
         }
 
         form {
             max-width: 800px;
-            margin: 0 auto;
-            background-color: white;
+            margin: 20px auto;
+            background-color: #fff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -58,10 +59,6 @@
             box-sizing: border-box;
         }
 
-        input[type="checkbox"] {
-            margin-right: 10px;
-        }
-
         input[type="submit"] {
             background-color: #28a745;
             color: white;
@@ -70,6 +67,7 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
+            width: 100%;
         }
 
         input[type="submit"]:hover {
@@ -78,15 +76,6 @@
 
         p {
             margin-bottom: 15px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .checkbox-label {
-            display: inline-block;
-            font-weight: normal;
         }
 
         .message {
@@ -100,124 +89,130 @@
             color: red;
             font-size: 0.9em;
         }
+
+        .help-text {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        textarea {
+            resize: vertical;
+        }
     </style>
 </head>
 <body>
-    <h1>Añadir un Nuevo Producto</h1>
+    <h1>Add Product, Category, and Details</h1>
 
     {% if message %}
         <p class="message">{{ message }}</p>
     {% endif %}
 
+    <!-- Formulario para Añadir Categoría -->
+    <form id="category-form" method="post" action="/admin/add-category/">
+        <fieldset>
+            <legend>Add New Category</legend>
+
+            <label for="name">Category Name:</label>
+            <input type="text" id="name" name="name" placeholder="e.g., Analgesic" required>
+            
+            <input type="submit" value="Add Category">
+        </fieldset>
+    </form>
+
+    <!-- Formulario para Crear Producto -->
     <form action="/admin/add-product/" method="post">
         <fieldset>
-            <legend>Detalles del Producto</legend>
+            <legend>Create Product</legend>
 
-            <div class="form-group">
-                <label for="generic_name">Nombre Genérico:</label>
-                <input type="text" id="generic_name" name="generic_name" required>
-            </div>
+            <label for="generic_name">Generic Name:</label>
+            <input type="text" id="generic_name" name="generic_name" placeholder="e.g., Ibuprofen" required>
 
-            <div class="form-group">
-                <label for="category_id">Categoría:</label>
-                <select id="category_id" name="category_id" required>
-                    {% for category in categories %}
-                        <option value="{{ category.id }}">{{ category.name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
+            <label for="category_id">Category:</label>
+            <select id="category_id" name="category_id" required>
+                <option value="" disabled selected>Select a category</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
 
-            <div class="form-group">
-                <label for="description">Descripción (puede ser HTML):</label>
-                <textarea id="description" name="description"></textarea>
-            </div>
+            <label for="description">Description (can be HTML):</label>
+            <textarea id="description" name="description" placeholder="Short description of the product"></textarea>
 
-            <div class="form-group">
-                <label for="large_description">Descripción Larga (puede ser HTML):</label>
-                <textarea id="large_description" name="large_description"></textarea>
-            </div>
+            <label for="large_description">Long Description (can be HTML):</label>
+            <textarea id="large_description" name="large_description" placeholder="Detailed description of the product"></textarea>
 
-            <div class="form-group">
-                <label for="image_url">URL de Imagen:</label>
-                <input type="text" id="image_url" name="image_url">
-            </div>
+            <label for="image_url">Image URL:</label>
+            <input type="text" id="image_url" name="image_url" placeholder="e.g., images/product.jpg">
 
-            <div class="form-group">
-                <label>¿El producto está disponible?</label>
+            <label>
                 <input type="checkbox" id="availability" name="availability" checked>
-                <span class="checkbox-label">Disponible</span>
-            </div>
+                Mark as available
+            </label>
 
-            <div class="form-group">
-                <label>¿Marcar el producto como best-seller?</label>
+            <label>
                 <input type="checkbox" id="is_best_seller" name="is_best_seller">
-                <span class="checkbox-label">Más Vendido</span>
-            </div>
+                Mark as best seller
+            </label>
+
+            <input type="submit" value="Add Product">
         </fieldset>
-
-        <fieldset>
-            <legend>Detalles Específicos</legend>
-
-            <div class="form-group">
-                <label for="brand_name">Nombre de la Marca:</label>
-                <input type="text" id="brand_name" name="brand_name" required>
-            </div>
-
-            <div class="form-group">
-                <label for="strength">Fuerza:</label>
-                <input type="text" id="strength" name="strength" required>
-            </div>
-
-            <div class="form-group">
-                <label for="composition">Composición:</label>
-                <textarea id="composition" name="composition"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="supply_type">Tipo de Suministro:</label>
-                <input type="text" id="supply_type" name="supply_type" required>
-            </div>
-
-            <div class="form-group">
-                <label for="manufacturer">Fabricante:</label>
-                <input type="text" id="manufacturer" name="manufacturer" required>
-            </div>
-
-            <div class="form-group">
-                <label for="other_brand_names">Otros Nombres de Marca:</label>
-                <textarea id="other_brand_names" name="other_brand_names"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="price">Precio:</label>
-                <input type="number" step="0.01" id="price" name="price" required>
-            </div>
-
-            <div class="form-group">
-                <label for="stock">Stock:</label>
-                <input type="number" id="stock" name="stock" required>
-            </div>
-
-            <div class="form-group">
-                <label for="packaging">Empaque:</label>
-                <input type="text" id="packaging" name="packaging">
-            </div>
-
-            <div class="form-group">
-                <label for="quantity_per_pack">Cantidad por Paquete:</label>
-                <input type="text" id="quantity_per_pack" name="quantity_per_pack">
-            </div>
-
-            <div class="form-group">
-                <label for="other_presentations">Otras Presentaciones (en formato JSON):</label>
-                <textarea id="other_presentations" name="other_presentations" placeholder='[{"price": "12", "quantity": "123"}]'></textarea>
-            </div>
-
-            <p>Ejemplo: [{"price": "12", "quantity": "123"}, {"price": "2", "quantity": "1"}, {"price": "200", "quantity": "666"}]</p>
-            <p class="error-message">Asegúrate de que el formato sea correcto. Usa comillas dobles (" ") para las claves y valores.</p>
-        </fieldset>
-
-        <input type="submit" value="Añadir Producto">
     </form>
+
+    <!-- Formulario para Añadir Detalles del Producto -->
+    <form action="/admin/add-product-detail/" method="post">
+        <fieldset>
+            <legend>Add Product Details</legend>
+
+            <label for="product_id">Product:</label>
+            <select id="product_id" name="product_id" required>
+                <option value="" disabled selected>Select a product</option>
+                {% for product in products %}
+                    <option value="{{ product.id }}">{{ product.generic_name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="brand_name">Brand Name:</label>
+            <input type="text" id="brand_name" name="brand_name" placeholder="e.g., Ibuprofen with caffeine" required>
+
+            <label for="strength">Strength:</label>
+            <input type="text" id="strength" name="strength" placeholder="e.g., 500mg" required>
+
+            <label for="composition">Composition:</label>
+            <textarea id="composition" name="composition" placeholder="Ingredients or components"></textarea>
+
+            <label for="supply_type">Supply Type:</label>
+            <input type="text" id="supply_type" name="supply_type" placeholder="e.g., Tablet, Liquid" required>
+
+            <label for="manufacturer">Manufacturer:</label>
+            <input type="text" id="manufacturer" name="manufacturer" placeholder="e.g., Rochem International, Inc." required>
+
+            <label for="packaging">Packaging:</label>
+            <input type="text" id="packaging" name="packaging" placeholder="e.g., Box, Bottle">
+
+            <label for="quantity_per_pack">Quantity per Pack:</label>
+            <input type="text" id="quantity_per_pack" name="quantity_per_pack" placeholder="e.g., 10">
+
+            <label for="price">Price:</label>
+            <input type="number" step="0.01" id="price" name="price" placeholder="e.g., 299.99" required>
+
+            <label for="stock">Stock:</label>
+            <input type="number" id="stock" name="stock" placeholder="e.g., 100" required>
+
+        
+            <label for="other_presentations">Other Presentations (JSON format):</label>
+            <textarea id="other_presentations" name="other_presentations" placeholder='e.g., [{"price": "12", "quantity": "123"}]'></textarea>
+            <span class="help-text">Example: [{"price": "12", "quantity": "123"}, {"price": "2", "quantity": "1"}, {"price": "200", "quantity": "666"}]</span>
+
+<br><br>
+            <input type="submit" value="Add Product Details">
+        </fieldset>
+    </form>
+
 </body>
 </html>

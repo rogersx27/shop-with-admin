@@ -22,34 +22,44 @@ def list_categories(request: Request, db: Session = Depends(get_db)):
 
 
 @router.get("/admin/add-category/", response_class=HTMLResponse)
-def add_category_form(request: Request):
-    return templates.TemplateResponse("add_category.html", {"request": request})
-
+def add_category_form(request: Request, db: Session = Depends(get_db)):
+    categories = services.category.get_categories(db)  # Obtener categorías para mostrar
+    return templates.TemplateResponse(
+        "add_category.html", {"request": request, "categories": categories}
+    )
 
 @router.post("/admin/add-category/")
 async def add_category(
-    request: Request, db: Session = Depends(get_db), name: str = Form(...)
+    request: Request, db: Session = Depends(get_db), name: str = Form(...),
 ):
-    services.category.create_category(db, schemas.CategoryCreate(name=name))
-    return templates.TemplateResponse(
-        "add_category.html",
-        {"request": request, "message": "Categoría agregada con éxito"},
-    )
+    try:
+        services.category.create_category(db, schemas.CategoryCreate(name=name))
+        message = "Categoría agregada con éxito"
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Error creando categoría: {str(e)}")
 
-
-@router.get("/admin/products/", response_class=HTMLResponse)
-def list_products(request: Request, db: Session = Depends(get_db)):
     categories = services.category.get_categories(db)
+    products = services.product.get_products(db)
+
     return templates.TemplateResponse(
-        "add_product.html", {"request": request, "categories": categories}
+        "add_product.html",
+        {
+            "request": request,
+            "categories": categories,
+            "products": products,
+            "message": message,
+        },
     )
 
 
 @router.get("/admin/add-product/", response_class=HTMLResponse)
 def add_product_form(request: Request, db: Session = Depends(get_db)):
     categories = services.category.get_categories(db)
+    products = services.product.get_products(db)
+
     return templates.TemplateResponse(
-        "add_product.html", {"request": request, "categories": categories}
+        "add_product.html",
+        {"request": request, "categories": categories, "products": products},
     )
 
 
@@ -64,20 +74,9 @@ async def add_product(
     availability: bool = Form(True),
     is_best_seller: bool = Form(False),
     large_description: str = Form(None),
-    brand_name: str = Form(...),
-    strength: str = Form(...),
-    composition: str = Form(None),
-    supply_type: str = Form(...),
-    manufacturer: str = Form(...),
-    other_brand_names: str = Form(None),
-    price: float = Form(...),
-    stock: int = Form(...),
-    packaging: str = Form(None),
-    quantity_per_pack: str = Form(None),
-    other_presentations: str = Form(None),
 ):
-    categories = services.category.get_categories(db)
     try:
+        # Crear un nuevo producto
         new_product = services.product.create_product_only(
             db,
             schemas.ProductCreate(
@@ -90,20 +89,59 @@ async def add_product(
                 large_description=large_description,
             ),
         )
+        db.add(new_product)
+        db.commit()
+        db.refresh(new_product)
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error creando producto: {str(e)}")
 
+    # Obtener las categorías y productos actualizados
+    categories = services.category.get_categories(db)
+    products = services.product.get_products(db)
+
+    # Retornar la plantilla actualizada con los productos nuevos
+    return templates.TemplateResponse(
+        "add_product.html",
+        {
+            "request": request,
+            "message": "Producto agregado con éxito",
+            "categories": categories,
+            "products": products,
+        },
+    )
+
+
+@router.post("/admin/add-product-detail/")
+async def add_product_detail(
+    request: Request,
+    db: Session = Depends(get_db),
+    product_id: UUID = Form(...),
+    brand_name: str = Form(...),
+    strength: str = Form(...),
+    composition: str = Form(None),
+    supply_type: str = Form(...),
+    manufacturer: str = Form(...),
+    other_brand_names: str = Form(None),
+    price: float = Form(...),
+    stock: int = Form(...),
+    packaging: str = Form(None),
+    quantity_per_pack: str = Form(None),
+    other_presentations: str = Form(None),
+):
     parsed_other_presentations = None
     if other_presentations:
         try:
-            parsed_other_presentations = json.loads(other_presentations)  # Convertir la cadena en JSON
+            parsed_other_presentations = json.loads(other_presentations)
         except json.JSONDecodeError:
+            categories = services.category.get_categories(db)
+            products = services.product.get_products(db)
             return templates.TemplateResponse(
                 "add_product.html",
                 {
                     "request": request,
                     "message": "Error: El formato de 'Otras Presentaciones' no es válido.",
                     "categories": categories,
+                    "products": products,
                 },
             )
 
@@ -111,7 +149,7 @@ async def add_product(
         new_product_detail = services.productDetail.create_productDetail_only(
             db,
             schemas.ProductDetailCreate(
-                product_id=getattr(new_product, "id"),
+                product_id=product_id,
                 brand_name=brand_name,
                 strength=strength,
                 composition=composition,
@@ -125,25 +163,24 @@ async def add_product(
                 other_presentations=parsed_other_presentations,
             ),
         )
-
+        db.add(new_product_detail)
+        db.commit()
+        db.refresh(new_product_detail)
+        message = "Detalles del producto agregados con éxito"
     except Exception as e:
         raise HTTPException(
             status_code=400, detail=f"Error creando detalles del producto: {str(e)}"
         )
 
-    db.add(new_product)
-    db.add(new_product_detail)
-    db.commit()
-    db.refresh(new_product)
-    db.refresh(new_product_detail)
-    
-    print(other_presentations)
+    categories = services.category.get_categories(db)
+    products = services.product.get_products(db)
 
     return templates.TemplateResponse(
         "add_product.html",
         {
             "request": request,
-            "message": "Producto agregado con éxito",
+            "message": message,
             "categories": categories,
+            "products": products,
         },
     )
