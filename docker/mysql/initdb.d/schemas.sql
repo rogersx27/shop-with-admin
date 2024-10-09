@@ -39,6 +39,8 @@ CREATE TABLE
         other_brand_names TEXT,
         price DECIMAL(10, 2) NOT NULL,
         stock INT NOT NULL,
+        packaging TEXT DEFAULT NULL,
+        quantity_per_pack TEXT DEFAULT NULL,
         FOREIGN KEY (product_id) REFERENCES products (id)
     );
 

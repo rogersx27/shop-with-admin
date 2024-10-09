@@ -1,5 +1,4 @@
-from datetime import datetime
-from sqlalchemy import Column, DateTime, Integer, String, DECIMAL, Boolean, Text, ForeignKey
+from sqlalchemy import Column, DateTime, Integer, String, DECIMAL, Boolean, Text, ForeignKey, null
 from sqlalchemy.orm import relationship
 from database import Base
 import uuid
@@ -17,5 +16,7 @@ class ProductDetail(Base):
     other_brand_names = Column(Text)
     price = Column(DECIMAL(10, 2), nullable=False)
     stock = Column(Integer, nullable=False)
+    packaging = Column(String(255), nullable=True)
+    quantity_per_pack = Column(String(255), nullable=True)
 
     product = relationship("Product", back_populates="product_details")
