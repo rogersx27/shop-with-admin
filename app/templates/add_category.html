@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Añadir Categoría</title>
+</head>
+<body>
+    <h1>Añadir Nueva Categoría</h1>
+    {% if message %}
+        <p style="color:green;">{{ message }}</p>
+    {% endif %}
+    <form action="/admin/add-category/" method="post">
+        <label for="name">Nombre de la Categoría:</label>
+        <input type="text" id="name" name="name" required><br><br>
+        <input type="submit" value="Añadir Categoría">
+    </form>
+</body>
+</html>

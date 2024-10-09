@@ -290,7 +290,12 @@
 
           <article>
             <h1>Pastillas de {{ product.generic_name }}</h1>
-            {{ product.large_description | safe }}
+            {% if product.large_description %}
+                {{ product.large_description | safe }}
+            {% else %}
+                <p>Descripción no disponible</p>
+            {% endif %}
+
           </article>
           <!-- page-product END -->
 

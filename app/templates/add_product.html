@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Añadir Producto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        fieldset {
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        legend {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        input[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .checkbox-label {
+            display: inline-block;
+            font-weight: normal;
+        }
+
+        .message {
+            text-align: center;
+            color: green;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Añadir un Nuevo Producto</h1>
+
+    {% if message %}
+        <p class="message">{{ message }}</p>
+    {% endif %}
+
+    <form action="/admin/add-product/" method="post">
+        <fieldset>
+            <legend>Detalles del Producto</legend>
+
+            <div class="form-group">
+                <label for="generic_name">Nombre Genérico:</label>
+                <input type="text" id="generic_name" name="generic_name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="category_id">Categoría:</label>
+                <select id="category_id" name="category_id" required>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Descripción (puede ser HTML):</label>
+                <textarea id="description" name="description"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="large_description">Descripción Larga (puede ser HTML):</label>
+                <textarea id="large_description" name="large_description"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="image_url">URL de Imagen:</label>
+                <input type="text" id="image_url" name="image_url">
+            </div>
+
+            <div class="form-group">
+                <label>¿El producto está disponible?</label>
+                <input type="checkbox" id="availability" name="availability" checked>
+                <span class="checkbox-label">Disponible</span>
+            </div>
+
+            <div class="form-group">
+                <label>¿Marcar el producto como best-seller?</label>
+                <input type="checkbox" id="is_best_seller" name="is_best_seller">
+                <span class="checkbox-label">Más Vendido</span>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Detalles Específicos</legend>
+
+            <div class="form-group">
+                <label for="brand_name">Nombre de la Marca:</label>
+                <input type="text" id="brand_name" name="brand_name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="strength">Fuerza:</label>
+                <input type="text" id="strength" name="strength" required>
+            </div>
+
+            <div class="form-group">
+                <label for="composition">Composición:</label>
+                <textarea id="composition" name="composition"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="supply_type">Tipo de Suministro:</label>
+                <input type="text" id="supply_type" name="supply_type" required>
+            </div>
+
+            <div class="form-group">
+                <label for="manufacturer">Fabricante:</label>
+                <input type="text" id="manufacturer" name="manufacturer" required>
+            </div>
+
+            <div class="form-group">
+                <label for="other_brand_names">Otros Nombres de Marca:</label>
+                <textarea id="other_brand_names" name="other_brand_names"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="price">Precio:</label>
+                <input type="number" step="0.01" id="price" name="price" required>
+            </div>
+
+            <div class="form-group">
+                <label for="stock">Stock:</label>
+                <input type="number" id="stock" name="stock" required>
+            </div>
+
+            <div class="form-group">
+                <label for="packaging">Empaque:</label>
+                <input type="text" id="packaging" name="packaging">
+            </div>
+
+            <div class="form-group">
+                <label for="quantity_per_pack">Cantidad por Paquete:</label>
+                <input type="text" id="quantity_per_pack" name="quantity_per_pack">
+            </div>
+
+            <div class="form-group">
+                <label for="other_presentations">Otras Presentaciones (en formato JSON):</label>
+                <textarea id="other_presentations" name="other_presentations" placeholder='[{"price": "12", "quantity": "123"}]'></textarea>
+            </div>
+
+            <p>Ejemplo: [{"price": "12", "quantity": "123"}, {"price": "2", "quantity": "1"}, {"price": "200", "quantity": "666"}]</p>
+            <p class="error-message">Asegúrate de que el formato sea correcto. Usa comillas dobles (" ") para las claves y valores.</p>
+        </fieldset>
+
+        <input type="submit" value="Añadir Producto">
+    </form>
+</body>
+</html>

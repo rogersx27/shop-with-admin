@@ -13,7 +13,16 @@ class ProductBase(BaseModel):
     availability: bool = True
 
 
-class ProductCreate(ProductBase):
+class ProductBaseForAdmin(BaseModel):
+    generic_name: str
+    category_id: UUID
+    description: Optional[str] = None
+    image_url: Optional[str] = None
+    availability: bool = True
+    is_best_seller: bool = False
+    large_description: Optional[str] = None
+
+class ProductCreate(ProductBaseForAdmin):
     pass
 
 

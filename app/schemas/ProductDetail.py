@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Dict, List, Optional
 
 from uuid import UUID
 
@@ -16,7 +16,22 @@ class ProductDetailBase(BaseModel):
     stock: Optional[int]
 
 
-class ProductDetailCreate(ProductDetailBase):
+class ProductDetailBaseForAdmin(BaseModel):
+    product_id: UUID
+    brand_name: Optional[str]
+    strength: Optional[str]
+    composition: Optional[str]
+    supply_type: Optional[str]
+    manufacturer: Optional[str]
+    other_brand_names: Optional[str]
+    price: Optional[float]
+    stock: Optional[int]
+    packaging: Optional[str]
+    quantity_per_pack: Optional[str]
+    other_presentations: Optional[List[Dict[str, str]]]
+
+
+class ProductDetailCreate(ProductDetailBaseForAdmin):
     pass
 
 

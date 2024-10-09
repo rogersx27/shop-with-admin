@@ -3,11 +3,17 @@ from sqlalchemy.exc import NoResultFound
 from fastapi import HTTPException
 import uuid
 
-def create_instance(db: Session, model, schema) -> object:
+
+def create_instance(db: Session, model, schema):
     db_instance = model(id=str(uuid.uuid4()), **schema.dict())
     db.add(db_instance)
     db.commit()
     db.refresh(db_instance)
+    return db_instance
+
+
+def create_instance_only(db: Session, model, schema):
+    db_instance = model(id=str(uuid.uuid4()), **schema.dict())
     return db_instance
 
 
@@ -26,7 +32,7 @@ def update_instance(db: Session, model, instance_id: str, update_schema) -> obje
     instance = db.query(model).filter(model.id == instance_id).first()
     if not instance:
         raise HTTPException(status_code=404, detail=f"{model.__name__} not found")
-    
+
     for key, value in update_schema.dict().items():
         setattr(instance, key, value)
     db.commit()
@@ -38,7 +44,7 @@ def delete_instance(db: Session, model, instance_id: str) -> dict[str, str]:
     instance = db.query(model).filter(model.id == instance_id).first()
     if not instance:
         raise HTTPException(status_code=404, detail=f"{model.__name__} not found")
-    
+
     db.delete(instance)
     db.commit()
     return {"detail": f"{model.__name__} deleted successfully"}

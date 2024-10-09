@@ -7,6 +7,7 @@ import models
 
 from .general import (
     create_instance,
+    create_instance_only,
     delete_instance,
     get_all_instances,
     get_instance_by_id,
@@ -14,8 +15,12 @@ from .general import (
 )
 
 
-def create_product(db: Session, product: schemas.ProductCreate):
+def create_product(db: Session, product: schemas.ProductCreate) -> models.Product:
     return create_instance(db, models.Product, product)
+
+
+def create_product_only(db: Session, product: schemas.ProductCreate) -> models.Product:
+    return create_instance_only(db, models.Product, product)
 
 
 def get_products(db: Session):
