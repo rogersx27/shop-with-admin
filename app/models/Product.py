@@ -11,7 +11,7 @@ class Product(Base):
 
     id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()), unique=True)
     
-    generic_name = Column(String(255), nullable=False)
+    generic_name = Column(String(255), nullable=False, unique=True)
     category_id = Column(String(36), ForeignKey('categories.id'), nullable=False)
     description = Column(Text)
     image_url = Column(String(255))

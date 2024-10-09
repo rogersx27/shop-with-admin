@@ -16,14 +16,13 @@ CREATE TABLE
 CREATE TABLE
     products (
         id CHAR(36) PRIMARY KEY NOT NULL DEFAULT 'UUID()',
-        generic_name VARCHAR(255) NOT NULL,
+        generic_name VARCHAR(255) NOT NULL UNIQUE,
         category_id CHAR(36) NOT NULL,
         description TEXT,
         image_url VARCHAR(255),
         availability BOOLEAN DEFAULT TRUE,
         is_best_seller BOOLEAN DEFAULT FALSE,
         large_description TEXT DEFAULT NULL,
-
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         FOREIGN KEY (category_id) REFERENCES categories (id)
