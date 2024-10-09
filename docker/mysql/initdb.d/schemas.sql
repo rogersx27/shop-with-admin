@@ -22,6 +22,8 @@ CREATE TABLE
         image_url VARCHAR(255),
         availability BOOLEAN DEFAULT TRUE,
         is_best_seller BOOLEAN DEFAULT FALSE,
+        large_description TEXT DEFAULT NULL,
+
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         FOREIGN KEY (category_id) REFERENCES categories (id)
@@ -41,6 +43,7 @@ CREATE TABLE
         stock INT NOT NULL,
         packaging TEXT DEFAULT NULL,
         quantity_per_pack TEXT DEFAULT NULL,
+        other_presentations JSON DEFAULT NULL,
         FOREIGN KEY (product_id) REFERENCES products (id)
     );
 

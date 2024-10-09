@@ -1,4 +1,5 @@
 from datetime import datetime
+from re import T
 from sqlalchemy import Column, DateTime, String, DECIMAL, Boolean, Text, ForeignKey
 from sqlalchemy.orm import relationship
 from database import Base
@@ -16,6 +17,7 @@ class Product(Base):
     image_url = Column(String(255))
     availability = Column(Boolean, default=True)
     is_best_seller = Column(Boolean, default=False)
+    large_description = Column(Text, nullable=True)
     
     created_at = Column(DateTime, default=datetime.now, nullable=False)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now, nullable=False)
