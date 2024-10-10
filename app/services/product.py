@@ -1,4 +1,5 @@
 import random
+from uuid import UUID
 from fastapi import HTTPException
 from sqlalchemy.orm import Session, joinedload
 import utils.utils as utils
@@ -35,7 +36,7 @@ def update_product(db: Session, product_id: str, product_update: schemas.Product
     return update_instance(db, models.Product, product_id, product_update)
 
 
-def delete_product(db: Session, product_id: str):
+def delete_product(db: Session, product_id: UUID):
     return delete_instance(db, models.Product, product_id)
 
 

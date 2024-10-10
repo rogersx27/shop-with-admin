@@ -1,9 +1,16 @@
 from typing import List
+import uuid
 from sqlalchemy.orm import Session
 import schemas
 import models
 
-from .general import create_instance, delete_instance, get_all_instances, get_instance_by_id, update_instance
+from .general import (
+    create_instance,
+    delete_instance,
+    get_all_instances,
+    get_instance_by_id,
+    update_instance,
+)
 
 
 def create_category(db: Session, category: schemas.CategoryCreate):
@@ -18,15 +25,19 @@ def get_category_by_id(db: Session, category_id: str):
     return get_instance_by_id(db, models.Category, category_id)
 
 
-def update_category(db: Session, category_id: str, category_update: schemas.CategoryUpdate):
+def update_category(
+    db: Session, category_id: str, category_update: schemas.CategoryUpdate
+):
     return update_instance(db, models.Category, category_id, category_update)
 
 
-def delete_category(db: Session, category_id: str):
+def delete_category(db: Session, category_id: str | uuid.UUID):
     return delete_instance(db, models.Category, category_id)
 
 
-def get_categories_with_products(db: Session) -> List[schemas.CategoryWithProductsResponse]:
+def get_categories_with_products(
+    db: Session,
+) -> List[schemas.CategoryWithProductsResponse]:
     categories = get_categories(db)
 
     category_responses: List[schemas.CategoryWithProductsResponse] = []
@@ -66,7 +77,7 @@ def get_categories_with_products(db: Session) -> List[schemas.CategoryWithProduc
                 products=products,
             )
         )
-        
+
     #  category_responses_2: List[schemas.CategoryWithProductsResponse] = [schemas.CategoryWithProductsResponse.model_validate(category) for category in categories]
-        
+
     return category_responses

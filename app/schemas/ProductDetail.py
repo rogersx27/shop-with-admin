@@ -23,7 +23,6 @@ class ProductDetailBaseForAdmin(BaseModel):
     composition: Optional[str]
     supply_type: Optional[str]
     manufacturer: Optional[str]
-    other_brand_names: Optional[str]
     price: Optional[float]
     stock: Optional[int]
     packaging: Optional[str]

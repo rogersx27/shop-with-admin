@@ -29,7 +29,7 @@ async def add_or_update_category(
 ):
     try:
         if category_id:
-            category = services.category.update_category(db, UUID(category_id), schemas.CategoryUpdate(name=name))
+            category = services.category.update_category(db, category_id, schemas.CategoryUpdate(name=name))
             message = "Category updated successfully"
         else:
             category = services.category.create_category(db, schemas.CategoryCreate(name=name))
@@ -87,7 +87,7 @@ async def add_or_update_product(
         )
         
         if product_id:
-            product = services.product.update_product(db, UUID(product_id), product_data)
+            product = services.product.update_product(db, product_id, product_data) # type: ignore
             message = "Product updated successfully"
         else:
             product = services.product.create_product(db, product_data)
@@ -149,11 +149,11 @@ async def add_or_update_product_detail(
             quantity_per_pack=quantity_per_pack,
             price=price,
             stock=stock,
-            other_presentations=other_presentations
+            other_presentations=other_presentations # type: ignore
         )
         
         if product_detail_id:
-            product_detail = services.productDetail.update_productDetail(db, UUID(product_detail_id), product_detail_data)
+            product_detail = services.productDetail.update_productDetail(db, product_detail_id, product_detail_data) # type: ignore
             message = "Product Detail updated successfully"
         else:
             product_detail = services.productDetail.create_productDetail(db, product_detail_data)

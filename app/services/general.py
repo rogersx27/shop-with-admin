@@ -21,14 +21,14 @@ def get_all_instances(db: Session, model):
     return db.query(model).all()
 
 
-def get_instance_by_id(db: Session, model, instance_id: str):
+def get_instance_by_id(db: Session, model, instance_id: str | uuid.UUID):
     instance = db.query(model).filter(model.id == instance_id).first()
     if not instance:
         raise HTTPException(status_code=404, detail=f"{model.__name__} not found")
     return instance
 
 
-def update_instance(db: Session, model, instance_id: str, update_schema) -> object:
+def update_instance(db: Session, model, instance_id: str | uuid.UUID, update_schema) -> object:
     instance = db.query(model).filter(model.id == instance_id).first()
     if not instance:
         raise HTTPException(status_code=404, detail=f"{model.__name__} not found")
@@ -40,7 +40,7 @@ def update_instance(db: Session, model, instance_id: str, update_schema) -> obje
     return instance
 
 
-def delete_instance(db: Session, model, instance_id: str) -> dict[str, str]:
+def delete_instance(db: Session, model, instance_id: uuid.UUID | str) -> dict[str, str]:
     instance = db.query(model).filter(model.id == instance_id).first()
     if not instance:
         raise HTTPException(status_code=404, detail=f"{model.__name__} not found")
