@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}Product Management{% endblock %}
+
+{% block header %}Product Management{% endblock %}
+
+{% block content %}
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h2 class="text-xl font-semibold mb-4">Add/Edit Product</h2>
+        <form id="product-form" method="post" action="/admin2/add-product/">
+            <input type="hidden" id="product_id" name="product_id">
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="generic_name">
+                    Generic Name:
+                </label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="generic_name" name="generic_name" type="text" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="category_id">
+                    Category:
+                </label>
+                <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="category_id" name="category_id" required>
+                    <option value="" disabled selected>Select a category</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="description">
+                    Description (can be HTML):
+                </label>
+                <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" name="description"></textarea>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="large_description">
+                    Long Description (can be HTML):
+                </label>
+                <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="large_description" name="large_description"></textarea>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="image_url">
+                    Image URL:
+                </label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="image_url" name="image_url" type="text">
+            </div>
+            <div class="mb-4">
+                <label class="inline-flex items-center">
+                    <input type="checkbox" class="form-checkbox" id="availability" name="availability" checked>
+                    <span class="ml-2">Mark as available</span>
+                </label>
+            </div>
+            <div class="mb-4">
+                <label class="inline-flex items-center">
+                    <input type="checkbox" class="form-checkbox" id="is_best_seller" name="is_best_seller">
+                    <span class="ml-2">Mark as best seller</span>
+                </label>
+            </div>
+            <div class="flex items-center justify-between">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                    Add/Update Product
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h2 class="text-xl font-semibold mb-4">Existing Products</h2>
+        <table class="w-full text-left table-auto">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="px-4 py-2">ID</th>
+                    <th class="px-4 py-2">Generic Name</th>
+                    <th class="px-4 py-2">Category</th>
+                    <th class="px-4 py-2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td class="border px-4 py-2">{{ product.id }}</td>
+                    <td class="border px-4 py-2">{{ product.generic_name }}</td>
+                    <td class="border px-4 py-2">{{ product.category.name }}</td>
+                    <td class="border px-4 py-2">
+                        <button onclick="editProduct('{{ product.id }}', '{{ product.generic_name }}', '{{ product.category_id }}', '{{ product.description }}', '{{ product.large_description }}', '{{ product.image_url }}', {{ product.availability | tojson }}, {{ product.is_best_seller | tojson }})" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded">Edit</button>
+                        <form method="post" action="/admin2/delete-product/" class="inline">
+                            <input type="hidden" name="product_id" value="{{ product.id }}">
+                            <button type="submit" onclick="return confirm('Are you sure you want to delete this product?');" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded ml-2">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function editProduct(id, genericName, categoryId, description, largeDescription, imageUrl, availability, isBestSeller) {
+            document.getElementById('product_id').value = id;
+            document.getElementById('generic_name').value = genericName;
+            document.getElementById('category_id').value = categoryId;
+            document.getElementById('description').value = description;
+            document.getElementById('large_description').value = largeDescription;
+            document.getElementById('image_url').value = imageUrl;
+            document.getElementById('availability').checked = availability;
+            document.getElementById('is_best_seller').checked = isBestSeller;
+            document.querySelector('#product-form button[type="submit"]').textContent = 'Update Product';
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+
+{% block title %}Product Detail Management{% endblock %}
+
+{% block header %}Product Detail Management{% endblock %}
+
+{% block content %}
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h2 class="text-xl font-semibold mb-4">Add/Edit Product Detail</h2>
+        <form id="product-detail-form" method="post" action="/admin2/add-product-detail/">
+            <input type="hidden" id="product_detail_id" name="product_detail_id">
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="product_id">
+                    Product:
+                </label>
+                <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="product_id" name="product_id" required>
+                    <option value="" disabled selected>Select a product</option>
+                    {% for product in products %}
+                        <option value="{{ product.id }}">{{ product.generic_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="brand_name">
+                    Brand Name:
+                </label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="brand_name" name="brand_name" type="text" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="strength">
+                    Strength:
+                </label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="strength" name="strength" type="text" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="composition">
+                    Composition:
+                </label>
+                <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="composition" name="composition"></textarea>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="supply_type">
+                    Supply Type:
+                </label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="supply_type" name="supply_type" type="text" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="manufacturer">
+                    Manufacturer:
+                </label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="manufacturer" name="manufacturer" type="text" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="packaging">
+                    Packaging:
+                </label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="packaging" name="packaging" type="text">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="quantity_per_pack">
+                    Quantity per Pack:
+                </label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="quantity_per_pack" name="quantity_per_pack" type="text">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="price">
+                    Price:
+                </label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="price" name="price" type="number" step="0.01" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="stock">
+                    Stock:
+                </label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="stock" name="stock" type="number" required>
+            </div>
+          
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">
+                    Other Presentations:
+                </label>
+                <div id="other-presentations-container">
+                    <!-- Existing presentations will be added here dynamically -->
+                </div>
+                <button type="button" onclick="addPresentation()" class="mt-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Add Presentation
+                </button>
+            </div>
+            <input type="hidden" id="other_presentations" name="other_presentations">
+  
+            <div class="flex items-center justify-between">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                    Add/Update Product Detail
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h2 class="text-xl font-semibold mb-4">Existing Product Details</h2>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left table-auto">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="px-4 py-2">ID</th>
+                        <th class="px-4 py-2">Product</th>
+                        <th class="px-4 py-2">Brand Name</th>
+                        <th class="px-4 py-2">Strength</th>
+                        <th class="px-4 py-2">Price</th>
+                        <th class="px-4 py-2">Stock</th>
+                        <th class="px-4 py-2">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for detail in product_details %}
+                    <tr>
+                        <td class="border px-4 py-2">{{ detail.id }}</td>
+                        <td class="border px-4 py-2">{{ detail.product.generic_name }}</td>
+                        <td class="border px-4 py-2">{{ detail.brand_name }}</td>
+                        <td class="border px-4 py-2">{{ detail.strength }}</td>
+                        <td class="border px-4 py-2">{{ detail.price }}</td>
+                        <td class="border px-4 py-2">{{ detail.stock }}</td>
+                        <td class="border px-4 py-2">
+                            <button onclick="editProductDetail('{{ detail.id }}', '{{ detail.product_id }}', '{{ detail.brand_name }}', '{{ detail.strength }}', '{{ detail.composition }}', '{{ detail.supply_type }}', '{{ detail.manufacturer }}', '{{ detail.packaging }}', '{{ detail.quantity_per_pack }}', '{{ detail.price }}', '{{ detail.stock }}', {{ detail.other_presentations | tojson | forceescape }})" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded">Edit</button>
+                            <form method="post" action="/admin2/delete-product-detail/" class="inline">
+                                <input type="hidden" name="product_detail_id" value="{{ detail.id }}">
+                                <button type="submit" onclick="return confirm('Are you sure you want to delete this product detail?');" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded ml-2">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        let presentationCounter = 0;
+
+        function addPresentation(price = '', quantity = '') {
+            const container = document.getElementById('other-presentations-container');
+            const presentationDiv = document.createElement('div');
+            presentationDiv.className = 'flex items-center space-x-2 mb-2';
+            presentationDiv.innerHTML = `
+                <input type="number" step="0.01" placeholder="Price" value="${price}" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <input type="number" placeholder="Quantity" value="${quantity}" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <button type="button" onclick="removePresentation(this)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline">
+                    Remove
+                </button>
+            `;
+            container.appendChild(presentationDiv);
+            presentationCounter++;
+        }
+
+        function removePresentation(button) {
+            button.parentElement.remove();
+            presentationCounter--;
+        }
+
+        function prepareOtherPresentations() {
+            const container = document.getElementById('other-presentations-container');
+            const presentations = container.querySelectorAll('div');
+            const otherPresentations = Array.from(presentations).map(div => {
+                const [priceInput, quantityInput] = div.querySelectorAll('input');
+                return {
+                    price: priceInput.value,
+                    quantity: quantityInput.value
+                };
+            });
+            document.getElementById('other_presentations').value = JSON.stringify(otherPresentations);
+        }
+
+        function editProductDetail(id, productId, brandName, strength, composition, supplyType, manufacturer, packaging, quantityPerPack, price, stock, otherPresentations) {
+            // Previous code for populating other fields remains unchanged
+            
+            // Clear existing presentations
+            document.getElementById('other-presentations-container').innerHTML = '';
+            
+            // Add each presentation
+            otherPresentations.forEach(presentation => {
+                addPresentation(presentation.price, presentation.quantity);
+            });
+
+            document.querySelector('#product-detail-form button[type="submit"]').textContent = 'Update Product Detail';
+        }
+    </script>
+    
+    <script>
+        function editProductDetail(id, productId, brandName, strength, composition, supplyType, manufacturer, packaging, quantityPerPack, price, stock, otherPresentations) {
+            document.getElementById('product_detail_id').value = id;
+            document.getElementById('product_id').value = productId;
+            document.getElementById('brand_name').value = brandName;
+            document.getElementById('strength').value = strength;
+            document.getElementById('composition').value = composition;
+            document.getElementById('supply_type').value = supplyType;
+            document.getElementById('manufacturer').value = manufacturer;
+            document.getElementById('packaging').value = packaging;
+            document.getElementById('quantity_per_pack').value = quantityPerPack;
+            document.getElementById('price').value = price;
+            document.getElementById('stock').value = stock;
+            document.getElementById('other_presentations').value = JSON.stringify(otherPresentations);
+            document.querySelector('#product-detail-form button[type="submit"]').textContent = 'Update Product Detail';
+        }
+    </script>
+{% endblock %}
