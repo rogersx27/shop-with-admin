@@ -7,6 +7,11 @@ from routes.pages import homeRouter
 from routes.admin import adminRouter
 from routes.admin import adminRouter2
 
+from dotenv import load_dotenv
+
+# Cargar las variables de entorno desde el archivo .env
+load_dotenv()
+
 app = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
