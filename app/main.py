@@ -22,6 +22,3 @@ app.include_router(adminRouter.router)
 app.include_router(adminRouter2.router)
 
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}

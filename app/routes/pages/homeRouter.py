@@ -11,7 +11,7 @@ templates = Jinja2Templates(directory="templates")
 router = APIRouter(tags=["Pages"])
 
 
-@router.get("/home/", response_class=HTMLResponse)
+@router.get("/", response_class=HTMLResponse)
 def get_categories(request: Request, db: Session = Depends(get_db)):
     category_responses = services.category.get_categories_with_products(db=db)
     best_sellers = services.product.get_best_sellers_by_field(db=db)
