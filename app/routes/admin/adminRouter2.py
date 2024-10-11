@@ -73,7 +73,11 @@ async def add_or_update_product(
     large_description: str = Form(None),
     image_url: str = Form(None),
     availability: bool = Form(False),
-    is_best_seller: bool = Form(False)
+    is_best_seller: bool = Form(False),
+    brand_name: str = Form(...),
+    manufacturer: str = Form(...),
+    composition: str = Form(None),
+    supply_type: str = Form(...)
 ):
     try:
         product_data = schemas.ProductCreate(
@@ -83,7 +87,11 @@ async def add_or_update_product(
             large_description=large_description,
             image_url=image_url,
             availability=availability,
-            is_best_seller=is_best_seller
+            is_best_seller=is_best_seller,
+            brand_name=brand_name,
+            manufacturer=manufacturer,
+            composition=composition,
+            supply_type=supply_type
         )
         
         if product_id:
@@ -126,11 +134,7 @@ async def add_or_update_product_detail(
     db: Session = Depends(get_db),
     product_detail_id: str = Form(None),
     product_id: UUID = Form(...),
-    brand_name: str = Form(...),
     strength: str = Form(...),
-    composition: str = Form(None),
-    supply_type: str = Form(...),
-    manufacturer: str = Form(...),
     packaging: str = Form(None),
     quantity_per_pack: str = Form(None),
     price: float = Form(...),
@@ -140,11 +144,7 @@ async def add_or_update_product_detail(
     try:
         product_detail_data = schemas.ProductDetailCreate(
             product_id=product_id,
-            brand_name=brand_name,
             strength=strength,
-            composition=composition,
-            supply_type=supply_type,
-            manufacturer=manufacturer,
             packaging=packaging,
             quantity_per_pack=quantity_per_pack,
             price=price,

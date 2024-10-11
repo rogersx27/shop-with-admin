@@ -18,11 +18,7 @@ class ProductDetailBase(BaseModel):
 
 class ProductDetailBaseForAdmin(BaseModel):
     product_id: UUID
-    brand_name: Optional[str]
     strength: Optional[str]
-    composition: Optional[str]
-    supply_type: Optional[str]
-    manufacturer: Optional[str]
     price: Optional[float]
     stock: Optional[int]
     packaging: Optional[str]

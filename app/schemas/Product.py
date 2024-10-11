@@ -21,6 +21,11 @@ class ProductBaseForAdmin(BaseModel):
     availability: bool = True
     is_best_seller: bool = False
     large_description: Optional[str] = None
+    brand_name: str
+    manufacturer: str
+    composition: Optional[str] = None
+    supply_type: str
+    
 
 class ProductCreate(ProductBaseForAdmin):
     pass
