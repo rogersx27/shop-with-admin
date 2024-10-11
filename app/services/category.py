@@ -48,9 +48,7 @@ def get_categories_with_products(
                 schemas.ProductDetailBase(
                     product_id=product.product_details[0].product_id,
                     strength=product.product_details[0].strength,
-                    composition=product.product_details[0].composition,
                     other_brand_names=product.product_details[0].other_brand_names,
-                    price=product.product_details[0].price,
                 )
                 if product.product_details
                 else None

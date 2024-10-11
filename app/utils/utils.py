@@ -19,7 +19,6 @@ def get_product_info(product: Product):
         details=schemas.ProductDetailResponse(
             product_id=product.product_details[0].product_id,
             strength=product.product_details[0].strength,
-            composition=product.product_details[0].composition,
             other_brand_names=product.product_details[0].other_brand_names,
         ) if product.product_details else None
     )

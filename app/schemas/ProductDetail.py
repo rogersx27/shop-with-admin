@@ -7,7 +7,6 @@ from uuid import UUID
 class ProductDetailBase(BaseModel):
     product_id: UUID
     strength: Optional[str]
-    composition: Optional[str]
     other_brand_names: Optional[str]
 
 

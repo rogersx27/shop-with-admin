@@ -69,17 +69,14 @@ def get_product(request: Request, product_id: str, db: Session = Depends(get_db)
         db=db, product_id=product_id
     )
 
-    brands = {product_detail.brand_name for product_detail in products_with_detail}
-    manufacturers = {product_detail.manufacturer for product_detail in products_with_detail}
-
     context = {
         "request": request,
         "categories": category_responses,
         "letters": letters,
         "product": product,
         "products_with_detail": products_with_detail,
-        "brands": brands,
-        "manufacturers": manufacturers,
+        "brands": product.brand_name,
+        "manufacturers": product.manufacturer,
     }
 
     return templates.TemplateResponse("product.html", context)
