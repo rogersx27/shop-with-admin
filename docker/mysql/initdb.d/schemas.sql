@@ -37,11 +37,8 @@ CREATE TABLE
         id CHAR(36) PRIMARY KEY NOT NULL DEFAULT 'UUID()',
         product_id CHAR(36) NOT NULL,
         strength VARCHAR(50) NOT NULL,
-        price DECIMAL(10, 2) NOT NULL,
-        stock INT DEFAULT NULL,
         other_brand_names TEXT,
         packaging TEXT DEFAULT NULL,
-        quantity_per_pack TEXT DEFAULT NULL,
         other_presentations JSON DEFAULT NULL,
         FOREIGN KEY (product_id) REFERENCES products (id)
     );

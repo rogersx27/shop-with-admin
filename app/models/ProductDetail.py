@@ -10,10 +10,7 @@ class ProductDetail(Base):
     product_id = Column(String(36), ForeignKey('products.id'), nullable=False)
     strength = Column(String(50), nullable=False)
     other_brand_names = Column(Text)
-    price = Column(DECIMAL(10, 2), nullable=False)
-    stock = Column(Integer, nullable=True)
     packaging = Column(String(255), nullable=True)
-    quantity_per_pack = Column(String(255), nullable=True)
     other_presentations = Column(JSON, nullable=True)
 
     product = relationship("Product", back_populates="product_details")

@@ -116,16 +116,9 @@ async def add_product_detail(
     request: Request,
     db: Session = Depends(get_db),
     product_id: UUID = Form(...),
-    brand_name: str = Form(...),
     strength: str = Form(...),
-    composition: str = Form(None),
-    supply_type: str = Form(...),
-    manufacturer: str = Form(...),
     other_brand_names: str = Form(None),
-    price: float = Form(...),
-    stock: int = Form(...),
     packaging: str = Form(None),
-    quantity_per_pack: str = Form(None),
     other_presentations: str = Form(None),
 ):
     parsed_other_presentations = None
@@ -150,16 +143,8 @@ async def add_product_detail(
             db,
             schemas.ProductDetailCreate(
                 product_id=product_id,
-                brand_name=brand_name,
                 strength=strength,
-                composition=composition,
-                supply_type=supply_type,
-                manufacturer=manufacturer,
-                other_brand_names=other_brand_names,
-                price=price,
-                stock=stock,
                 packaging=packaging,
-                quantity_per_pack=quantity_per_pack,
                 other_presentations=parsed_other_presentations,
             ),
         )

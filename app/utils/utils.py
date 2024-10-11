@@ -18,14 +18,9 @@ def get_product_info(product: Product):
         supply_type=getattr(product, 'supply_type', None),
         details=schemas.ProductDetailResponse(
             product_id=product.product_details[0].product_id,
-            brand_name=product.product_details[0].brand_name,
             strength=product.product_details[0].strength,
             composition=product.product_details[0].composition,
-            supply_type=product.product_details[0].supply_type,
-            manufacturer=product.product_details[0].manufacturer,
             other_brand_names=product.product_details[0].other_brand_names,
-            price=product.product_details[0].price,
-            stock=product.product_details[0].stock
         ) if product.product_details else None
     )
     

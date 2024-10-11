@@ -1,5 +1,7 @@
+import json
 from fastapi import APIRouter, HTTPException, Request, Form, Depends
 from fastapi.responses import HTMLResponse, RedirectResponse
+from pydantic_core import to_json
 from sqlalchemy.orm import Session
 from database import get_db
 from fastapi.templating import Jinja2Templates
@@ -136,20 +138,22 @@ async def add_or_update_product_detail(
     product_id: UUID = Form(...),
     strength: str = Form(...),
     packaging: str = Form(None),
-    quantity_per_pack: str = Form(None),
-    price: float = Form(...),
-    stock: int = Form(...),
     other_presentations: str = Form(None)
 ):
     try:
+        
+        json_other_presentations = None
+        print(other_presentations)
+        if other_presentations:
+            json_other_presentations = json.loads(other_presentations)
+            print(json_other_presentations)
+            
+        
         product_detail_data = schemas.ProductDetailCreate(
             product_id=product_id,
             strength=strength,
             packaging=packaging,
-            quantity_per_pack=quantity_per_pack,
-            price=price,
-            stock=stock,
-            other_presentations=other_presentations # type: ignore
+            other_presentations=json_other_presentations
         )
         
         if product_detail_id:

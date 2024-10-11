@@ -205,43 +205,6 @@
 
 
             <tbody class="free-bonus">
-              <tr>
-                <td class="package">
-                  <div class="td-inner">
-                    {{ product_with_detail.quantity_per_pack }} tablets
-                    <div class="hidden-md">ahorro &#36;&nbsp;530.15</div>
-                  </div>
-                  <ul class="stars hidden-mob">
-
-                    <li class="icon icon-plus-circle">
-                      <span><span class="pills">{{ product.generic_name }} {{ product_with_detail.strength  }} x 20 pills FREE bonus!</span></span>
-                    </li>
-
-                    <li class="icon icon-plus-circle">
-                      <span><i></i><span class="shipping">Free AirMail shipping</span></span>
-                    </li>
-
-                  </ul>
-                </td>
-
-                <td class="price">
-                  <div class="td-inner">
-                    <sup>&#36;</sup>&nbsp;{{ product_with_detail.price }} 
-                  </div>
-                </td>
-                <td class="per_pill">
-                  <div class="td-inner">
-                    <sup>&#36;</sup>&nbsp;{{ (product_with_detail.price | float / product_with_detail.quantity_per_pack | int) | round(2) }}
-                </td>                
-                <td class="order">
-                  <div class="td-inner">
-                    <a href="cart.php?add=78190"><button class="btn btn-rdd btn-inverse">
-                        <span class="icon icon-cart-green-small"></span>
-                        <span class="hidden-mob">Añadir a la cesta</span>
-                      </button></a>
-                  </div>
-                </td>
-              </tr>
               {% for presentation in product_with_detail.other_presentations %}
               <tr>
                 <td class="package">
