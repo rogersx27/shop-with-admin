@@ -11,6 +11,11 @@ def get_product_info(product: Product):
         image_url=getattr(product, 'image_url', None),
         description=getattr(product, 'description', None),
         availability=getattr(product, 'availability', False),
+        is_best_seller=getattr(product, 'is_best_seller', False),
+        brand_name=getattr(product, 'brand_name', None),
+        manufacturer=getattr(product, 'manufacturer', None),
+        composition=getattr(product, 'composition', None),
+        supply_type=getattr(product, 'supply_type', None),
         details=schemas.ProductDetailResponse(
             product_id=product.product_details[0].product_id,
             brand_name=product.product_details[0].brand_name,

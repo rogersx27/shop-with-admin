@@ -24,7 +24,7 @@ def create_product_only(db: Session, product: schemas.ProductCreate) -> models.P
     return create_instance_only(db, models.Product, product)
 
 
-def get_products(db: Session):
+def get_products(db: Session) -> list[models.Product]:
     return get_all_instances(db, models.Product)
 
 
