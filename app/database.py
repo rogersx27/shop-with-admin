@@ -19,7 +19,12 @@ print(MYSQL_USER, MYSQL_PASSWORD, MYSQL_HOST, MYSQL_DATABASE)
 SQLALCHEMY_DATABASE_URL = f"mysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}/{MYSQL_DATABASE}"
 
 
+print(SQLALCHEMY_DATABASE_URL)
+print("trying to connect to database")
+
 engine: Engine = create_engine(SQLALCHEMY_DATABASE_URL)
+
+print("connected to database" + str(engine))
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
