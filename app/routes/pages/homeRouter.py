@@ -16,6 +16,8 @@ def get_categories(request: Request, db: Session = Depends(get_db)):
     category_responses = services.category.get_categories_with_products(db=db)
     best_sellers = services.product.get_best_sellers_by_field(db=db)
     random_products = services.product.get_random_products(db=db, num_products=1)
+    
+    print(best_sellers)
 
     letters = [chr(i) for i in range(ord("A"), ord("Z") + 1)]
 

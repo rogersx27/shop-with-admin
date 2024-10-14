@@ -8,6 +8,7 @@ class ProductDetailBase(BaseModel):
     product_id: UUID
     strength: Optional[str]
     other_brand_names: Optional[str]
+    other_presentations: Optional[List[Dict[str, str]]]
 
 
 class ProductDetailBaseForAdmin(BaseModel):

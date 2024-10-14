@@ -20,6 +20,7 @@ def get_product_info(product: Product):
             product_id=product.product_details[0].product_id,
             strength=product.product_details[0].strength,
             other_brand_names=product.product_details[0].other_brand_names,
+            other_presentations=product.product_details[0].other_presentations,
         ) if product.product_details else None
     )
     
